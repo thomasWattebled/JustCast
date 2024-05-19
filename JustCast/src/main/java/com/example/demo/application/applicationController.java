@@ -11,7 +11,10 @@ import com.example.demo.application.service.directeurCastingService;
 
 import jakarta.servlet.http.HttpSession;
 
+import com.example.demo.application.classBDD.Agent;
+import com.example.demo.application.classBDD.acteur;
 import com.example.demo.application.classBDD.directeurCasting;
+import com.example.demo.application.service.acteurService;
 import com.example.demo.application.service.agentService;
 
 
@@ -24,6 +27,9 @@ public class applicationController {
 
 	@Autowired
 	private agentService agentService;
+	
+	@Autowired
+	private acteurService acteurService;
 	
 	@GetMapping("/home")
 	public String home() {
@@ -62,6 +68,12 @@ public class applicationController {
 		return "/application/home";
 	}
 	
+	@PostMapping("/inscriptionActeur")
+	public String inscriptionActeur(@RequestParam String nom,@RequestParam String prenom,@RequestParam String mail,@RequestParam String tel,@RequestParam String mdp,@RequestParam Long age) {
+		acteurService.ajouterActeur(nom, prenom, mail, mdp, tel,age);
+		return "/application/home";
+	}
+	
 	@PostMapping("/connexion")
 	public String connexion(@RequestParam String role,@RequestParam String mail,@RequestParam String mdp,HttpSession session) {
 		if(role.equals("dc")) {
@@ -75,9 +87,22 @@ public class applicationController {
 		}
 		
 		if(role.equals("agent")) {
-			boolean verification = agentService.existant(mail, mdp);
-			if(verification==true) {
-				return "application/connexionReussie";
+			Agent verification = agentService.existant(mail, mdp);
+			if(verification!=null) {
+				session.setAttribute("nom",verification.getNom());
+				session.setAttribute("prenom",verification.getPrenom());
+				session.setAttribute("mail",verification.getMail());
+				return "application/accueilDC";
+			}
+		}
+		
+		if(role.equals("acteur")) {
+			acteur verification = acteurService.existant(mail, mdp);
+			if(verification!=null) {
+				session.setAttribute("nom",verification.getNom());
+				session.setAttribute("prenom",verification.getPrenom());
+				session.setAttribute("mail",verification.getMail());
+				return "application/accueilDC";
 			}
 		}
 		

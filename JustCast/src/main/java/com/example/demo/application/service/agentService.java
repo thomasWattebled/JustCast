@@ -1,9 +1,11 @@
 package com.example.demo.application.service;
 
+import com.example.demo.application.classBDD.Agent;
+
 public interface agentService {
 
 	void ajouterAgent(String nom, String prenom, String mail, String mdp, String tel);
 	
-	boolean existant(String mail, String mdp);
+	Agent existant(String mail, String mdp);
 	
 }

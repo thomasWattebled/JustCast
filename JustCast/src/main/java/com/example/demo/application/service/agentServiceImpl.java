@@ -23,14 +23,16 @@ public class agentServiceImpl implements agentService {
 	}
 	
 	@Override
-	public boolean existant(String mail, String mdp) {
+	public Agent existant(String mail, String mdp) {
 		Iterable<Agent> verificationMail = repoAgent.findByMail(mail);
+		Agent a = null;
 		for (Agent d : verificationMail) {
 			if( d.getMdp().equals(mdp)) {
-				return true;
+				a = d;
+				return a;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	
