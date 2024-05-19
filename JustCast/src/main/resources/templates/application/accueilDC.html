@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Directeur de casting JustCast</title>
+    <link href="/css/accueilDC.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="entete">
+    	<p th:text="'Directeur de casting - ' + ${session.nom} + ' ' + ${session.prenom} "/>
+        <img src="https://justcast4.wordpress.com/wp-content/uploads/2024/05/image.png?w=300" alt="Logo JustCast">
+        <p>JustCast - Accueil</p>
+    </div>
+    
+    <div id="barre">
+    	<div class="btn">
+    		<p>Se déconnecter</p>
+    	</div>
+    	<div class="btn">
+    		<p>Mes informations</p>
+    	</div>
+    	<div class="btn">
+    		<p>Mes événements</p>
+    	</div>
+    	<div class="btn">
+    		<p>mon emploi du temps</p>
+    	</div>
+    </div>
+    
+   
+   	<div id="blocks">
+    <div class="block">
+        <img src="https://cdn.pixabay.com/photo/2019/11/07/20/48/cinema-4609877_640.jpg" alt="Image">
+        <div class="block-content">
+            <h3>Mes événements</h3>
+            <p>Vous permet de créer des événements, mais également de les modifier ou les gérer...</p>
+        </div>
+    </div>
+    
+    <div class="block">
+        <img src="https://cdn.pixabay.com/photo/2018/07/12/21/32/subscribe-3534409_640.jpg" alt="Image">
+        <div class="block-content">
+            <h3>Mes informations</h3>
+            <p>Vous permet de gérer vos informations ...</p>
+        </div>
+    </div>
+    
+    <div class="block">
+        <img src="https://cdn.pixabay.com/photo/2018/05/01/11/34/love-3365338_640.jpg" alt="Image">
+        <div class="block-content">
+            <h3>Mon emploi du temps</h3>
+            <p>Vous permet de visualiser votre emploi du temps ...</p>
+        </div>
+    </div>
+</div>
+	
+	
+</body>
+
+</html>

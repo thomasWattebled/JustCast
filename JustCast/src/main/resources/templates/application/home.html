@@ -20,13 +20,15 @@
         <p>Bienvenue sur notre site qui va vous permettre de gérer vos castings, vos acteurs et les offres du marché.</p>
     </div>
 
-    <form action="/application/pageInscription" method="post">
+    <form action="/application/connexion" method="post">
         <p>Je suis :</p>
         <select name="role">
             <option value="dc">Directeur de casting</option>
             <option value="agent">Agent</option>
             <option value="acteur">Acteur</option>
         </select>
+        <p>Mail : <input type="text" name="mail"></p>
+		<p>Mot de passe : <input type="text" name="mdp"></p>
         <input type="submit" value="Continuer">
          <a href="/application/pageInscription">Je n'ai pas de compte</a>
     </form>

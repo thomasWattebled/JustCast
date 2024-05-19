@@ -3,6 +3,7 @@ package com.example.demo.application.classBDD;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 public class directeurCasting {

@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.application.service.directeurCastingService;
+
+import jakarta.servlet.http.HttpSession;
+
+import com.example.demo.application.classBDD.directeurCasting;
 import com.example.demo.application.service.agentService;
 
 
@@ -59,11 +63,14 @@ public class applicationController {
 	}
 	
 	@PostMapping("/connexion")
-	public String connexion(@RequestParam String role,@RequestParam String mail,@RequestParam String mdp) {
+	public String connexion(@RequestParam String role,@RequestParam String mail,@RequestParam String mdp,HttpSession session) {
 		if(role.equals("dc")) {
-			boolean verification = DCService.existant(mail, mdp);
-			if(verification==true) {
-				return "application/connexionReussie";
+			directeurCasting verification = DCService.existant(mail, mdp);
+			if(verification!=null) {
+				session.setAttribute("nom",verification.getNom());
+				session.setAttribute("prenom",verification.getPrenom());
+				session.setAttribute("mail",verification.getMail());
+				return "application/accueilDC";
 			}
 		}
 		

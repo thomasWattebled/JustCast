@@ -20,14 +20,16 @@ public class directeurCastingServiceImpl implements directeurCastingService {
 	}
 	
 	@Override
-	public boolean existant(String mail, String mdp) {
+	public directeurCasting existant(String mail, String mdp) {
 		Iterable<directeurCasting> verificationMail = repoDirecteurCasting.findByMail(mail);
+		directeurCasting dc = null;
 		for (directeurCasting d : verificationMail) {
 			if( d.getMdp().equals(mdp)) {
-				return true;
+				dc = d;
+				return dc;
 			}
 		}
-		return false;
+		return dc;
 	}
 
 	
