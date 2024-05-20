@@ -1,0 +1,28 @@
+<html xmlns:th="https://www.thymeleaf.org" >
+
+
+	<head>
+		<link href="/css/inscription.css" rel="stylesheet">
+	</head>
+
+	<body>
+	
+		<div id="entete">
+        	<img src="https://justcast4.wordpress.com/wp-content/uploads/2024/05/image.png?w=300" alt="Logo JustCast">
+        	<p>JustCast - Inscription</p>
+    	</div>
+		
+		<h2>Inscription Acteur : </h2>
+		
+		<form action="/application/creationRoleCasting" method="post">
+			<p>Nom du film : <input type="text" name="nomFilm"></p>
+			<p>role : <input type="text" name="role"></p>
+			<p>Age minimum : <input type="number" name="ageMin" </p>
+			<p>Age maximum : <input type="number" name="ageMax" </p>
+			<p>sexe : <input type="tel" name="sexe"></p>
+			<input type="submit" value="Inscription">
+		</form>	
+		
+			
+	</body>
+</html>

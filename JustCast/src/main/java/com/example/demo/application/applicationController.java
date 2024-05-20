@@ -1,7 +1,11 @@
 package com.example.demo.application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +15,12 @@ import com.example.demo.application.service.directeurCastingService;
 
 import jakarta.servlet.http.HttpSession;
 
+
 import com.example.demo.application.classBDD.Agent;
+import com.example.demo.application.classBDD.Casting;
 import com.example.demo.application.classBDD.acteur;
 import com.example.demo.application.classBDD.directeurCasting;
+import com.example.demo.application.service.CastingService;
 import com.example.demo.application.service.acteurService;
 import com.example.demo.application.service.agentService;
 
@@ -30,6 +37,9 @@ public class applicationController {
 	
 	@Autowired
 	private acteurService acteurService;
+	
+	@Autowired
+	private CastingService castingService;
 	
 	@GetMapping("/home")
 	public String home() {
@@ -117,4 +127,32 @@ public class applicationController {
 		session.removeAttribute("prenom");
 		return "/application/home";
 	}
+	
+	@GetMapping("/evenementDC")
+	public String evenementDC(HttpSession session) {
+		System.out.println(session.getAttribute("mail"));
+		return "/application/evenementDC";
+	}
+	
+	@GetMapping("/creationEvenementDC")
+	public String creationEvenementDC(HttpSession session) {
+		return "/application/creationEvenementDC";
+	}
+	
+	@PostMapping("/creationRoleCasting")
+	public String creationRoleCasting(@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe, HttpSession session) {
+		castingService.ajouterCasting(nomFilm, role, Integer.parseInt(ageMin), Integer.parseInt(ageMax), sexe,session.getAttribute("mail").toString());
+		return "/application/evenementDC";
+	} 
+	
+	@GetMapping("/myEvenementDC")
+	public String myEvenementDC(HttpSession session, Model model) {
+		
+		List<Casting> castings = new ArrayList<>();
+		castings = castingService.getCastingByCreateur( (String) session.getAttribute("mail"));
+		model.addAttribute("castings",castings);
+		return "/application/myEvenementDC";
+	}
+	
+	
 }

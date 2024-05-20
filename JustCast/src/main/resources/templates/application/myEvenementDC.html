@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>evenement Directeur de casting JustCast</title>
+    <link href="/css/accueilDC.css" rel="stylesheet">
+     <script src ="/script/script.js"> </script>
+</head>
+<body>
+
+
+<div id="entete">
+    	<p th:text="'Directeur de casting - ' + ${session.nom} + ' ' + ${session.prenom} "/>
+        <img src="https://justcast4.wordpress.com/wp-content/uploads/2024/05/image.png?w=300" alt="Logo JustCast">
+        <p>JustCast - Accueil</p>
+    </div>
+    
+    <div id="barre">
+    	<div class="btn">
+    		<p onclick="confirmLogout();">Se déconnecter</p>
+    	</div>
+    	<div class="btn">
+    		<p>Mes informations</p>
+    	</div>
+    	<div class="btn">
+    		<p onclick="eventDC();">Mes événements</p>
+    	</div>
+    	<div class="btn">
+    		<p>mon emploi du temps</p>
+    	</div>
+    </div>
+
+<h1>mes evenements</h1>
+<table>
+  <tr>
+    <td>film</td>
+    <td>role</td>
+    <td>age min</td>
+    <td>age max</td>
+    <td>sexe</td>
+  </tr>
+<tr th:each="casting : ${castings}">
+	<td th:text="${casting.nomFilm}"></td>
+	<td th:text="${casting.role}"></td>
+	<td th:text="${casting.ageMin}"></td>
+	<td th:text="${casting.ageMax}"></td>
+	<td th:text="${casting.sexe}"></td>
+</tr>
+
+<table>
+
+
+<input type="button" value="retour" onclick="eventDC();">
+
+</body>
+
+</html>
+
