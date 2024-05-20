@@ -3,15 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Directeur de casting JustCast</title>
+    <title>Agent JustCast</title>
     <link href="/css/accueilDC.css" rel="stylesheet">
-     <script src ="/script/script.js"> </script>
+    <script src ="/script/script.js"> </script>
 </head>
 
 <body>
 
     <div id="entete">
-    	<p th:text="'Directeur de casting - ' + ${session.nom} + ' ' + ${session.prenom} "/>
+    	<p th:text="'Agent - ' + ${session.nom} + ' ' + ${session.prenom} "/>
         <img src="https://justcast4.wordpress.com/wp-content/uploads/2024/05/image.png?w=300" alt="Logo JustCast">
         <p>JustCast - Accueil</p>
     </div>
@@ -56,7 +56,17 @@
             <p>Vous permet de visualiser votre emploi du temps ...</p>
         </div>
     </div>
+    
+    <div class="block">
+        <img src="https://cdn.pixabay.com/photo/2021/09/06/04/15/man-6600781_1280.jpg" alt="Image">
+        <div class="block-content">
+            <h3>Liste d'acteurs</h3>
+            <p>Permet de gérer les acteurs. Vous pouvez ajouter de nouveaux acteurs, ou en enlever. </p>
+        </div>
+    </div>
 </div>
+	
+	
 	
 	
 </body>

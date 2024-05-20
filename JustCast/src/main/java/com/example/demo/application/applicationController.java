@@ -84,6 +84,7 @@ public class applicationController {
 				session.setAttribute("mail",verification.getMail());
 				return "application/accueilDC";
 			}
+			
 		}
 		
 		if(role.equals("agent")) {
@@ -92,7 +93,7 @@ public class applicationController {
 				session.setAttribute("nom",verification.getNom());
 				session.setAttribute("prenom",verification.getPrenom());
 				session.setAttribute("mail",verification.getMail());
-				return "application/accueilDC";
+				return "application/accueilAgent";
 			}
 		}
 		
@@ -102,12 +103,18 @@ public class applicationController {
 				session.setAttribute("nom",verification.getNom());
 				session.setAttribute("prenom",verification.getPrenom());
 				session.setAttribute("mail",verification.getMail());
-				return "application/accueilDC";
+				return "application/accueilActeur";
 			}
 		}
 		
 		return "/application/home";
 	}
 	
-	
+	@GetMapping("/deconnexion")
+	public String deconnexionAgent(HttpSession session) {
+		session.removeAttribute("email");
+		session.removeAttribute("nom");
+		session.removeAttribute("prenom");
+		return "/application/home";
+	}
 }
