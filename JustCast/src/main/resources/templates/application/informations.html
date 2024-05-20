@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Acteur JustCast</title>
+        <link href="/css/accueilDC.css" rel="stylesheet">
+        <script src ="/script/script.js"> </script>
+    </head>
+
+    <body>
+
+        <div id="entete">
+            <img src="https://justcast4.wordpress.com/wp-content/uploads/2024/05/image.png?w=300" alt="Logo JustCast">
+            <p>JustCast - Accueil</p>
+        </div>
+        
+        <div id="barre">
+            <div class="btn">
+                <p onclick="confirmLogout();">Se déconnecter</p>
+            </div>
+        </div>
+
+        <p th:text="'Nom : ' + ${session.nom}"/>
+
+        <p th:text="'Prénom : ' + ${session.prenom}"/>
+
+        <p th:text="'Email : ' + ${session.mail}"/>
+        
+    </body>
+
+</html>

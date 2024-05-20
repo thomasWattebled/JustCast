@@ -153,6 +153,14 @@ public class applicationController {
 		model.addAttribute("castings",castings);
 		return "/application/myEvenementDC";
 	}
-	
-	
+
+	@GetMapping("/informations")
+	public String informations(HttpSession session) {
+		return "/application/informations";
+	}
+
+	@GetMapping("/emploiDuTemps")
+	public String emploiDuTemps(HttpSession session) {
+		return "/application/emploiDuTemps";
+	}
 }

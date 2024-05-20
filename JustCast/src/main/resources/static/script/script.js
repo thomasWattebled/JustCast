@@ -16,3 +16,11 @@ function creationEvenement() {
 function modificationEvenement() {  
          window.location.href = 'myEvenementDC';          
         }
+
+function mesInformations() {  
+    window.location.href = 'informations';          
+    }
+
+function emploiDuTemps () {  
+    window.location.href = 'emploiDuTemps';          
+    }
