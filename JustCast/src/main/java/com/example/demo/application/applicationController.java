@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.application.service.directeurCastingService;
 
+
 import jakarta.servlet.http.HttpSession;
 
 
@@ -23,6 +24,7 @@ import com.example.demo.application.classBDD.directeurCasting;
 import com.example.demo.application.service.CastingService;
 import com.example.demo.application.service.acteurService;
 import com.example.demo.application.service.agentService;
+import com.example.demo.application.service.reponseCastingService;
 
 
 @Controller
@@ -40,6 +42,9 @@ public class applicationController {
 	
 	@Autowired
 	private CastingService castingService;
+	
+	@Autowired
+	private reponseCastingService reponseCastingService;
 	
 	@GetMapping("/home")
 	public String home() {
@@ -183,5 +188,13 @@ public class applicationController {
 		session.setAttribute("idCasting", idCasting);
 		return "/application/formulaireCasting";
 	}
+	
+	@PostMapping("/validerInscriptionCasting")
+	public String validerInscriptionCasting(@RequestParam String nom,@RequestParam String prenom,@RequestParam Long age,@RequestParam String tel,@RequestParam String mail,@RequestParam String photo,@RequestParam Long idCasting) {
+		reponseCastingService.ajouterReponse(idCasting,nom, prenom,age,tel,photo);
+		return "/application/annonces";
+	}
+	
+	
 	
 }

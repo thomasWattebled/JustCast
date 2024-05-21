@@ -21,6 +21,7 @@
     <p>Numéro de téléphone : <input type="tel" name="tel" th:value="${session.tel}"></p>
     <p>Mail : <input type="text" name="mail" th:value="${session.mail}"></p>
     <p>Votre photo : <input type="file" name="photo"></p> <!-- Utilisez type="file" pour l'upload de fichiers -->
+    <input type="hidden" name="idCasting" th:value="${session.idCasting}"/>
     <input type="submit" value="Inscription">
 </form>
 		
