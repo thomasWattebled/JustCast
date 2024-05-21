@@ -21,6 +21,7 @@ import com.example.demo.application.classBDD.Agent;
 import com.example.demo.application.classBDD.Casting;
 import com.example.demo.application.classBDD.acteur;
 import com.example.demo.application.classBDD.directeurCasting;
+import com.example.demo.application.classBDD.reponseCasting;
 import com.example.demo.application.service.CastingService;
 import com.example.demo.application.service.acteurService;
 import com.example.demo.application.service.agentService;
@@ -120,6 +121,7 @@ public class applicationController {
 				session.setAttribute("mail",verification.getMail());
 				session.setAttribute("age", verification.getAge());
 				session.setAttribute("tel", verification.getTel());
+				session.setAttribute("idActeur", verification.getId());
 				return "application/accueilActeur";
 			}
 		}
@@ -137,6 +139,12 @@ public class applicationController {
 	
 	@GetMapping("/evenementDC")
 	public String evenementDC(HttpSession session) {
+		System.out.println(session.getAttribute("mail"));
+		return "/application/evenementDC";
+	}
+	
+	@PostMapping("/evenementDC")
+	public String evenementDCPost(HttpSession session) {
 		System.out.println(session.getAttribute("mail"));
 		return "/application/evenementDC";
 	}
@@ -190,11 +198,40 @@ public class applicationController {
 	}
 	
 	@PostMapping("/validerInscriptionCasting")
-	public String validerInscriptionCasting(@RequestParam String nom,@RequestParam String prenom,@RequestParam Long age,@RequestParam String tel,@RequestParam String mail,@RequestParam String photo,@RequestParam Long idCasting) {
-		reponseCastingService.ajouterReponse(idCasting,nom, prenom,age,tel,photo);
+	public String validerInscriptionCasting(@RequestParam String nom,@RequestParam String prenom,@RequestParam Long age,@RequestParam String tel,@RequestParam String mail,@RequestParam String photo,@RequestParam Long idCasting,@RequestParam Long idActeur) {
+		reponseCastingService.ajouterReponse(idCasting,idActeur,nom, prenom,age,tel,photo);
 		return "/application/annonces";
 	}
 	
+	@PostMapping("/modifierCasting")
+	public String modifierCasting(@RequestParam Long idCasting,@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe, HttpSession session) {
+			
+		session.setAttribute("modNomFilm", nomFilm);
+		session.setAttribute("modRole", role);
+		session.setAttribute("modIdCasting", idCasting);
+		session.setAttribute("modAgeMin", ageMin);
+		session.setAttribute("modAgeMax", ageMax);
+		session.setAttribute("modSexe", sexe);
+		
+		return "/application/modifierEvenementDC";
+	} 
+	
+	@PostMapping("/modifierRoleCasting")
+	public String modifierRoleCasting(@RequestParam Long idCasting,@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe, HttpSession session) {
+		
+		castingService.updateCasting(idCasting,nomFilm, role, Integer.parseInt(ageMin), Integer.parseInt(ageMax), sexe,session.getAttribute("mail").toString());
+		return "/application/evenementDC";
+	} 
+	
+	@GetMapping("/postulationsActeur")
+	public String postulationsActeur(HttpSession session, Model model) {
+		
+		List<reponseCasting> castings = new ArrayList<>();
+		castings = reponseCastingService.getCastingByIdActeur((Long) session.getAttribute("idActeur"));
+		model.addAttribute("castings",castings);
+		
+		return "/application/postulationsActeur";
+	}
 	
 	
 }

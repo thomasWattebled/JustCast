@@ -32,23 +32,40 @@
     </div>
 
 <h1>mes evenements</h1>
-<table>
-  <tr>
-    <td>film</td>
-    <td>role</td>
-    <td>age min</td>
-    <td>age max</td>
-    <td>sexe</td>
-  </tr>
-<tr th:each="casting : ${castings}">
-	<td th:text="${casting.nomFilm}"></td>
-	<td th:text="${casting.role}"></td>
-	<td th:text="${casting.ageMin}"></td>
-	<td th:text="${casting.ageMax}"></td>
-	<td th:text="${casting.sexe}"></td>
-</tr>
 
-<table>
+	<table>
+	  <tr>
+	    <td>film</td>
+	    <td>role</td>
+	    <td>age min</td>
+	    <td>age max</td>
+	    <td>sexe</td>
+	    <td>Modifier</td>
+	    <td>Supprimer</td>
+	  </tr>
+	<tr th:each="casting : ${castings}">
+		<td th:text="${casting.nomFilm}"></td>
+		<td th:text="${casting.role}"></td>
+		<td th:text="${casting.ageMin}"></td>
+		<td th:text="${casting.ageMax}"></td>
+		<td th:text="${casting.sexe}"></td>
+		<!-- Champs de formulaire invisibles pour stocker les données -->
+		<form action="/application/modifierCasting" method="post">
+			<input type="hidden" name="nomFilm" th:value="${casting.nomFilm}"/>
+			<input type="hidden" name="role" th:value="${casting.role}"/>
+	        <input type="hidden" name="ageMin" th:value="${casting.ageMin}"/>
+	        <input type="hidden" name="ageMax" th:value="${casting.ageMax}"/>
+	        <input type="hidden" name="sexe" th:value="${casting.sexe}"/>
+	        <input type="hidden" name="idCasting" th:value="${casting.id}"/>
+	        <td><button type="submit" name="submit" value="modifierCasting">Modifier</button></td>
+	     </form>
+	     <form action="/application/supprimerCasting" method="post">
+	        <input type="hidden" name="idCasting" th:value="${casting.id}"/>
+	        <td><button type="submit" name="submit" value="supprimerCasting">Supprimer</button></td>
+	     </form>
+	</tr>
+	
+	<table>
 
 
 <input type="button" value="retour" onclick="eventDC();">

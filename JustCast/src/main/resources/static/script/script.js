@@ -28,3 +28,7 @@ function emploiDuTemps () {
 function lesAnnonces() {
 	window.location.href = 'annonces';
 	}
+	
+function mesPostulations(){
+	window.location.href = 'postulationsActeur';
+}

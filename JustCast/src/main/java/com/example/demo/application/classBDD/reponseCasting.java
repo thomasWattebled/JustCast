@@ -9,16 +9,18 @@ public class reponseCasting {
 	
 	private Long id;
 	private Long idCasting;
+	private Long idActeur;
 	private String nomActeur;
 	private String prenomActeur;
 	private Long ageActeur;
 	private String telActeur;
 	private String imgActeur;
 	
-	public reponseCasting(Long idCasting, String nomActeur, String prenomActeur, Long ageActeur, String telActeur,
+	public reponseCasting(Long idCasting,Long idActeur, String nomActeur, String prenomActeur, Long ageActeur, String telActeur,
 			String imgActeur) {
 		super();
 		this.idCasting = idCasting;
+		this.idActeur = idActeur;
 		this.nomActeur = nomActeur;
 		this.prenomActeur = prenomActeur;
 		this.ageActeur = ageActeur;
@@ -84,6 +86,14 @@ public class reponseCasting {
 
 	public void setImgActeur(String imgActeur) {
 		this.imgActeur = imgActeur;
+	}
+
+	public Long getIdActeur() {
+		return idActeur;
+	}
+
+	public void setIdActeur(Long idActeur) {
+		this.idActeur = idActeur;
 	}
 	
 	

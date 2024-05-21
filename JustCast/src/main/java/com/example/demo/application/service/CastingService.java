@@ -15,6 +15,11 @@ public interface CastingService {
 	Casting existant(String nomFilm, String role);
 
 	public List<Casting> getAllCasting();
+
+	public List<Casting> getCastingById(Long idCasting);
+
+	public Casting updateCasting(Long idCasting, String nomFilm, String role, int ageMin, int ageMax, String sexe, String string);
+
 }
 
 

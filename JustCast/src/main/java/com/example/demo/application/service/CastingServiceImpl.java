@@ -35,6 +35,35 @@ public class CastingServiceImpl implements CastingService{
 	public List<Casting> getAllCasting() {
 		return (List<Casting>) repoCasting.findAll();
 	}
+
+	@Override
+	public List<Casting> getCastingById(Long idCasting) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Casting updateCasting(Long idCasting, String nomFilm, String role, int ageMin, int ageMax, String sexe, String string) {
+		
+		Optional<Casting> casting = repoCasting.findById(idCasting);
+		
+		if(casting.isPresent()) {
+			Casting getCasting = casting.get();
+			getCasting.setNomFilm(nomFilm);
+			getCasting.setAgeMax(ageMax);
+			getCasting.setAgeMin(ageMin);
+			getCasting.setRole(role);
+			getCasting.setSexe(sexe);
+			
+			return repoCasting.save(getCasting);
+		}
+		
+		else {
+            // Gérer le cas où le casting n'existe pas
+            throw new RuntimeException("Casting not found with id " + idCasting);
+        }
+		
+	}
 }
 
 	
