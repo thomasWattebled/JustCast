@@ -24,3 +24,7 @@ function mesInformations() {
 function emploiDuTemps () {  
     window.location.href = 'emploiDuTemps';          
     }
+    
+function lesAnnonces() {
+	window.location.href = 'annonces';
+	}

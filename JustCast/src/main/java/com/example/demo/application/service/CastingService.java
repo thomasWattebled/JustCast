@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.demo.application.classBDD.Casting;
 
 public interface CastingService {
+	
 	public List<Casting> getCastingByCreateur(String email);
 
 	void ajouterCasting(String nomFilm, String role, Integer ageMin, Integer ageMax, String sexe,String createur);
@@ -12,6 +13,8 @@ public interface CastingService {
 	
 	
 	Casting existant(String nomFilm, String role);
+
+	public List<Casting> getAllCasting();
 }
 
 

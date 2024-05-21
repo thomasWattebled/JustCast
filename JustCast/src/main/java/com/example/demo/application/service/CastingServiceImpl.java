@@ -30,6 +30,11 @@ public class CastingServiceImpl implements CastingService{
 	public List<Casting> getCastingByCreateur(String email) {
 		return repoCasting.findByCreateur(email); 
 	}
+
+	@Override
+	public List<Casting> getAllCasting() {
+		return (List<Casting>) repoCasting.findAll();
+	}
 }
 
 	

@@ -1,0 +1,29 @@
+<html xmlns:th="https://www.thymeleaf.org" >
+
+
+	<head>
+		<link href="/css/inscription.css" rel="stylesheet">
+	</head>
+
+	<body>
+	
+		<div id="entete">
+        	<img src="https://justcast4.wordpress.com/wp-content/uploads/2024/05/image.png?w=300" alt="Logo JustCast">
+        	<p>Formulaire Casting</p>
+    	</div>
+		
+		<h2 th:text="'Vous vous inscrivez au casting du film ' + ${session.film} + ' pour le role :  ' + ${session.role} "/>
+		
+		<form action="/application/validerInscriptionCasting" method="post">
+    <p>Nom : <input type="text" name="nom" th:value="${session.nom}"></p>
+    <p>Prénom : <input type="text" name="prenom" th:value="${session.prenom}"></p>
+    <p>Age : <input type="number" name="age" th:value="${session.age}"></p>
+    <p>Numéro de téléphone : <input type="tel" name="tel" th:value="${session.tel}"></p>
+    <p>Mail : <input type="text" name="mail" th:value="${session.mail}"></p>
+    <p>Votre photo : <input type="file" name="photo"></p> <!-- Utilisez type="file" pour l'upload de fichiers -->
+    <input type="submit" value="Inscription">
+</form>
+		
+			
+	</body>
+</html>

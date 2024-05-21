@@ -6,16 +6,10 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-    color: #333;
-    line-height: 1.6;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
 }
 
 /* Header Styles */
+
 #entete {
     background-color: #333;
     color: white;
@@ -25,10 +19,6 @@ body {
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
 }
 
 #entete img {
@@ -42,13 +32,6 @@ body {
     margin: 0;
 }
 
-/* Heading Styles */
-h2 {
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 2em;
-}
-
 /* Form Styles */
 form {
     max-width: 400px;
@@ -57,17 +40,19 @@ form {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
 }
 
 form p {
     margin-bottom: 10px;
     font-size: 1.2em;
-    text-align: left; /* Ajout de l'alignement à gauche pour les paragraphes */
+    text-align: left;
 }
 
 input[type="text"],
 input[type="tel"],
-input[type="password"],
+input[type="number"],
+input[type="file"],
 input[type="submit"] {
     width: calc(100% - 20px);
     padding: 10px;
@@ -88,4 +73,15 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: #555;
+}
+
+h2 {
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    text-align: center;
+    text-transform: uppercase;
+    border-bottom: 2px solid #333;
+    padding-bottom: 10px;
 }

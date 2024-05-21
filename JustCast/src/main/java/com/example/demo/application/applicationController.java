@@ -113,6 +113,8 @@ public class applicationController {
 				session.setAttribute("nom",verification.getNom());
 				session.setAttribute("prenom",verification.getPrenom());
 				session.setAttribute("mail",verification.getMail());
+				session.setAttribute("age", verification.getAge());
+				session.setAttribute("tel", verification.getTel());
 				return "application/accueilActeur";
 			}
 		}
@@ -163,4 +165,23 @@ public class applicationController {
 	public String emploiDuTemps(HttpSession session) {
 		return "/application/emploiDuTemps";
 	}
+	
+	@GetMapping("/annonces")
+	public String annonces(HttpSession session, Model model) {
+		
+		List<Casting> castings = new ArrayList<>();
+		castings = castingService.getAllCasting();
+		model.addAttribute("castings",castings);
+		
+		return "/application/annonces";
+	}
+	
+	@PostMapping("/repondreAnnonce")
+	public String repondreAnnonce(HttpSession session,@RequestParam String film,@RequestParam String role,@RequestParam Long ageMin,@RequestParam Long ageMax,@RequestParam String sexe,@RequestParam Long idCasting) {
+		session.setAttribute("film", film);
+		session.setAttribute("role", role);
+		session.setAttribute("idCasting", idCasting);
+		return "/application/formulaireCasting";
+	}
+	
 }
