@@ -32,3 +32,15 @@ function lesAnnonces() {
 function mesPostulations(){
 	window.location.href = 'postulationsActeur';
 }
+
+function listPostulation(x) {
+	console.log(1);
+}
+
+function handleFilmClick(button) {
+            var filmId = button.getAttribute('data-film-id') +'';
+            console.log('ID du film sélectionné:', filmId);
+            window.location.href='/application/detailsCasting/'+filmId;
+        }
+
+

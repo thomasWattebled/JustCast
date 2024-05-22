@@ -42,8 +42,11 @@
 	    <td>sexe</td>
 	    <td>Modifier</td>
 	    <td>Supprimer</td>
+	    <td>id</td>
 	  </tr>
-	<tr th:each="casting : ${castings}">
+	<tr th:each="casting : ${castings}" th:with="idString=''+${casting.id} + ''" th:attr="data-film-id=${casting.id}"
+		onclick="handleFilmClick(this)">
+	
 		<td th:text="${casting.nomFilm}"></td>
 		<td th:text="${casting.role}"></td>
 		<td th:text="${casting.ageMin}"></td>
@@ -63,8 +66,8 @@
 	        <input type="hidden" name="idCasting" th:value="${casting.id}"/>
 	        <td><button type="submit" name="submit" value="supprimerCasting">Supprimer</button></td>
 	     </form>
+	     <td th:text="${casting.id}"></td>
 	</tr>
-	
 	<table>
 
 

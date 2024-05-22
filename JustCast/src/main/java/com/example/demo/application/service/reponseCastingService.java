@@ -12,4 +12,6 @@ public interface reponseCastingService {
 
 	List<reponseCasting> getCastingByIdActeur(Long idActeur);
 	
+	public List<reponseCasting> getCastingByIdCasting(Long idCasting);
+	
 }

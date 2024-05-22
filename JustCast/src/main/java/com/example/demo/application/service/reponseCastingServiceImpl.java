@@ -29,4 +29,11 @@ public class reponseCastingServiceImpl implements reponseCastingService {
 		return repoReponseCasting.findByIdActeur(idActeur);
 	}
 
+	@Override
+	public List<reponseCasting> getCastingByIdCasting(Long idCasting) {
+		System.out.println(repoReponseCasting.findByIdCasting(idCasting).size());
+		return repoReponseCasting.findByIdCasting(idCasting);
+		
+	}
+
 }
