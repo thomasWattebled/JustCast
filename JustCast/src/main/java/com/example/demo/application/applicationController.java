@@ -101,6 +101,7 @@ public class applicationController {
 				session.setAttribute("role","dc");
 				session.setAttribute("prenom",verification.getPrenom());
 				session.setAttribute("mail",verification.getMail());
+				session.setAttribute("tel",verification.getTel());
 				return "application/accueilDC";
 			}
 			
@@ -114,6 +115,7 @@ public class applicationController {
 				session.setAttribute("mdp",verification.getMdp());
 				session.setAttribute("prenom",verification.getPrenom());
 				session.setAttribute("mail",verification.getMail());
+				session.setAttribute("tel",verification.getTel());
 				return "application/accueilAgent";
 			}
 		}

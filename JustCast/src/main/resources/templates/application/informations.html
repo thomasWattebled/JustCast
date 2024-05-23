@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Acteur JustCast</title>
-        <link href="/css/accueilDC.css" rel="stylesheet">
+        <link href="/css/information.css" rel="stylesheet">
         <script src ="/script/script.js"> </script>
     </head>
 
@@ -28,12 +28,20 @@
     		</form>
     	</div>
         </div>
-
-        <p th:text="'Nom : ' + ${session.nom}"/>
-
-        <p th:text="'Prénom : ' + ${session.prenom}"/>
-
-        <p th:text="'Email : ' + ${session.mail}"/>
+		
+		<div class="information">
+		<form class="form">
+        	<p th:text="'Nom : ' + ${session.nom}"/>
+        	<p th:text="'Prénom : ' + ${session.prenom}"/>
+        	<p th:text="'Email : ' + ${session.mail}"/>
+        	<p th:text="'Numéro de téléphone : ' + ${session.tel}"/>
+        	<input type="submit" value="Modifier">
+        </form>
+        </div>
+       
+        
+        
+        
         
     </body>
 
