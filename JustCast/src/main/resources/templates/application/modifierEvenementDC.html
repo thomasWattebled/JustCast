@@ -2,7 +2,8 @@
 
 
 	<head>
-		<link href="/css/inscription.css" rel="stylesheet">
+		<link href="/css/creationCasting.css" rel="stylesheet">
+		<script src ="/script/script.js"> </script>
 	</head>
 
 	<body>
@@ -11,10 +12,33 @@
         	<img src="https://justcast4.wordpress.com/wp-content/uploads/2024/05/image.png?w=300" alt="Logo JustCast">
         	<p>JustCast - Inscription</p>
     	</div>
+    	
+    	<div id="barre">
+    	<div class="btn">
+    		<p onclick="confirmLogout();">Se déconnecter</p>
+    	</div>
+    	<div class="btn">
+    		<p>Mes informations</p>
+    	</div>
+    	<div class="btn">
+    		<p onclick="eventDC();">Mes castings</p>
+    	</div>
+    	<div class="btn">
+    		<p>mon emploi du temps</p>
+    	</div>
+    	<div class="btn">
+    		<form id="accueil" action="/application/connexion" method="post">
+    			<input type="hidden" name="role" th:value="${session.role}"/>
+    			<input type="hidden" name="mail" th:value="${session.mail}"/>
+    			<input type="hidden" name="mdp" th:value="${session.mdp}"/>
+    			<p onclick="envoieForm('accueil')" name="submit">Accueil</p>
+    		</form>
+    	</div>
+    </div>
 		
-		<h2>Inscription Acteur : </h2>
+		<h2>Modification du rôle : </h2>
 		
-		<form action="/application/modifierRoleCasting" method="post">
+		<form class="form" action="/application/modifierRoleCasting" method="post">
 			<p>Nom du film : <input type="text" name="nomFilm" th:value="${session.modNomFilm}" ></p>
 			<p>role : <input type="text" name="role" th:value="${session.modRole}"></p>
 			<p>Age minimum : <input type="number" name="ageMin" th:value="${session.modAgeMin}"</p>

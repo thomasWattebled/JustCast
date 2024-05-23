@@ -97,6 +97,8 @@ public class applicationController {
 			directeurCasting verification = DCService.existant(mail, mdp);
 			if(verification!=null) {
 				session.setAttribute("nom",verification.getNom());
+				session.setAttribute("mdp",verification.getMdp());
+				session.setAttribute("role","dc");
 				session.setAttribute("prenom",verification.getPrenom());
 				session.setAttribute("mail",verification.getMail());
 				return "application/accueilDC";
@@ -108,6 +110,8 @@ public class applicationController {
 			Agent verification = agentService.existant(mail, mdp);
 			if(verification!=null) {
 				session.setAttribute("nom",verification.getNom());
+				session.setAttribute("role","agent");
+				session.setAttribute("mdp",verification.getMdp());
 				session.setAttribute("prenom",verification.getPrenom());
 				session.setAttribute("mail",verification.getMail());
 				return "application/accueilAgent";
@@ -123,6 +127,8 @@ public class applicationController {
 				session.setAttribute("age", verification.getAge());
 				session.setAttribute("tel", verification.getTel());
 				session.setAttribute("idActeur", verification.getId());
+				session.setAttribute("mdp",verification.getMdp());
+				session.setAttribute("role","acteur");
 				return "application/accueilActeur";
 			}
 		}
@@ -204,7 +210,9 @@ public class applicationController {
 	
 	@PostMapping("/validerInscriptionCasting")
 	public String validerInscriptionCasting(HttpSession session,@RequestParam String nom,@RequestParam String prenom,@RequestParam Long age,@RequestParam String tel,@RequestParam String mail,@RequestParam String photo,@RequestParam Long idCasting,@RequestParam Long idActeur) {
-		reponseCastingService.ajouterReponse(idCasting,idActeur,nom, prenom,age,tel,photo);
+		String film = (String) session.getAttribute("film");
+		String role = (String) session.getAttribute("role");
+		reponseCastingService.ajouterReponse(idCasting,idActeur,nom, prenom,age,tel,photo,film,role);
 		session.removeAttribute("film");
 		session.removeAttribute("role");
 		session.removeAttribute("idCasting");
@@ -255,5 +263,10 @@ public class applicationController {
 		
 		model.addAttribute("reponsecastings",reponsecastings);
             return "/application/detailsCasting";
-        } 
+        }
+	
+	@GetMapping("/gererActeur")
+	public String gererActeur(HttpSession session) {
+		return "/application/gererActeur";
+	}
 }

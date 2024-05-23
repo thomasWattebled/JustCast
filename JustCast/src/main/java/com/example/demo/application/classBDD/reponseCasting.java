@@ -15,9 +15,11 @@ public class reponseCasting {
 	private Long ageActeur;
 	private String telActeur;
 	private String imgActeur;
+	private String film;
+	private String role;
 	
 	public reponseCasting(Long idCasting,Long idActeur, String nomActeur, String prenomActeur, Long ageActeur, String telActeur,
-			String imgActeur) {
+			String imgActeur,String film,String role) {
 		super();
 		this.idCasting = idCasting;
 		this.idActeur = idActeur;
@@ -26,6 +28,8 @@ public class reponseCasting {
 		this.ageActeur = ageActeur;
 		this.telActeur = telActeur;
 		this.imgActeur = imgActeur;
+		this.film = film;
+		this.role = role;
 	}
 	
 	public reponseCasting() {}
@@ -94,6 +98,22 @@ public class reponseCasting {
 
 	public void setIdActeur(Long idActeur) {
 		this.idActeur = idActeur;
+	}
+
+	public String getFilm() {
+		return film;
+	}
+
+	public void setFilm(String film) {
+		this.film = film;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	

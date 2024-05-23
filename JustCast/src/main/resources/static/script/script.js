@@ -43,4 +43,11 @@ function handleFilmClick(button) {
             window.location.href='/application/detailsCasting/'+filmId;
         }
 
+function envoieForm(idForm) {
+	const form = document.getElementById(idForm);
+	form.submit();
+}
 
+function gererActeurs(){
+	window.location.href = 'gererActeur';
+}

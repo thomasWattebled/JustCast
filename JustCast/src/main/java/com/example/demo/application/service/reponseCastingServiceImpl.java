@@ -18,9 +18,9 @@ public class reponseCastingServiceImpl implements reponseCastingService {
 
 	@Override
 	public void ajouterReponse(Long idCasting,Long idActeur, String nomActeur, String prenomActeur, Long ageActeur, String telActeur,
-			String imgActeur) {
+			String imgActeur,String film,String role) {
 		
-		repoReponseCasting.save(new reponseCasting(idCasting,idActeur,nomActeur,prenomActeur,ageActeur,telActeur,imgActeur));
+		repoReponseCasting.save(new reponseCasting(idCasting,idActeur,nomActeur,prenomActeur,ageActeur,telActeur,imgActeur,film,role));
 		
 	}
 

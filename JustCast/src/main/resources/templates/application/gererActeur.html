@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Annonces</title>
+    <title>gérer acteur, agent JustCast</title>
     <link href="/css/accueilDC.css" rel="stylesheet">
      <script src ="/script/script.js"> </script>
 </head>
@@ -11,7 +11,7 @@
 <body>
 
     <div id="entete">
-    	<p th:text="'Acteur - ' + ${session.nom} + ' ' + ${session.prenom} "/>
+    	<p th:text="'agent - ' + ${session.nom} + ' ' + ${session.prenom} "/>
         <img src="https://justcast4.wordpress.com/wp-content/uploads/2024/05/image.png?w=300" alt="Logo JustCast">
         <p>JustCast - Accueil</p>
     </div>
@@ -22,9 +22,6 @@
     	</div>
     	<div class="btn">
     		<p>Mes informations</p>
-    	</div>
-    	<div class="btn">
-    		<p onclick="lesAnnonces();">Les annonces</p>
     	</div>
     	<div class="btn">
     		<p>mon emploi du temps</p>
@@ -38,22 +35,27 @@
     		</form>
     	</div>
     </div>
-
-   <form id="castingForm" action="/application/repondreAnnonce" method="post">
-    <table>
-        <thead>
-            <tr>
-                <th>Film</th>
-                <th>Rôle</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="casting, iterStat : ${castings}">
-                <td th:text="${casting.film}"></td>
-                <td th:text="${casting.role}"></td>
-            </tr>
-        </tbody>
-    </table>
+    
+   
+   	<div id="blocks">
+    <div class="block" onclick="trouverActeur();">
+        <img src="https://cdn.pixabay.com/photo/2019/11/07/20/48/cinema-4609877_640.jpg" alt="Image">
+        <div class="block-content">
+            <h3>Trouver un acteur</h3>
+            <p>Vous permet de trouver un acteur et de l'ajouter à votre liste.</p>
+        </div>
+    </div>
+    
+    <div class="block" onclick="voirActeur();">
+        <img src="https://cdn.pixabay.com/photo/2024/01/04/14/27/write-8487618_1280.jpg" alt="Image" width="300" height="200">
+        <div class="block-content">
+            <h3>Visualiser mes acteurs</h3>
+            <p>Vous permet de visualiser vos acteurs.</p>
+        </div>
+    </div>
+    
+   
+</div>
 	
 	
 </body>

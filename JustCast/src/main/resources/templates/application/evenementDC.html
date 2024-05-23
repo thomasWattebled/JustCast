@@ -29,6 +29,14 @@
     	<div class="btn">
     		<p>mon emploi du temps</p>
     	</div>
+    	<div class="btn">
+    		<form id="accueil" action="/application/connexion" method="post">
+    			<input type="hidden" name="role" th:value="${session.role}"/>
+    			<input type="hidden" name="mail" th:value="${session.mail}"/>
+    			<input type="hidden" name="mdp" th:value="${session.mdp}"/>
+    			<p onclick="envoieForm('accueil')" name="submit">Accueil</p>
+    		</form>
+    	</div>
     </div>
     
    

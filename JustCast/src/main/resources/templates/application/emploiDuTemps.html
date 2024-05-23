@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/accueilDC.css" rel="stylesheet">
+    <script src ="/script/script.js"> </script>
     <title>Emploi du Temps</title>
     <style>
         table {
@@ -45,8 +46,18 @@
         <div class="btn">
             <p onclick="confirmLogout();">Se déconnecter</p>
         </div>
+        <div class="btn">
+    		<form id="accueil" action="/application/connexion" method="post">
+    			<input type="hidden" name="role" th:value="${session.role}"/>
+    			<input type="hidden" name="mail" th:value="${session.mail}"/>
+    			<input type="hidden" name="mdp" th:value="${session.mdp}"/>
+    			<p onclick="envoieForm('accueil')" name="submit">Accueil</p>
+    		</form>
+    	</div>
     </div>
+    
     <h1>Emploi du Temps Hebdomadaire</h1>
+    
     <table>
         <thead>
             <tr>
