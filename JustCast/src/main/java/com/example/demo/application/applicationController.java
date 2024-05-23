@@ -135,6 +135,9 @@ public class applicationController {
 		session.removeAttribute("email");
 		session.removeAttribute("nom");
 		session.removeAttribute("prenom");
+		session.removeAttribute("age");
+		session.removeAttribute("tel");
+		session.removeAttribute("idActeur");
 		return "/application/home";
 	}
 	
@@ -192,6 +195,7 @@ public class applicationController {
 	
 	@PostMapping("/repondreAnnonce")
 	public String repondreAnnonce(HttpSession session,@RequestParam String film,@RequestParam String role,@RequestParam Long ageMin,@RequestParam Long ageMax,@RequestParam String sexe,@RequestParam Long idCasting) {
+		System.out.println(film);
 		session.setAttribute("film", film);
 		session.setAttribute("role", role);
 		session.setAttribute("idCasting", idCasting);
@@ -199,9 +203,12 @@ public class applicationController {
 	}
 	
 	@PostMapping("/validerInscriptionCasting")
-	public String validerInscriptionCasting(@RequestParam String nom,@RequestParam String prenom,@RequestParam Long age,@RequestParam String tel,@RequestParam String mail,@RequestParam String photo,@RequestParam Long idCasting,@RequestParam Long idActeur) {
+	public String validerInscriptionCasting(HttpSession session,@RequestParam String nom,@RequestParam String prenom,@RequestParam Long age,@RequestParam String tel,@RequestParam String mail,@RequestParam String photo,@RequestParam Long idCasting,@RequestParam Long idActeur) {
 		reponseCastingService.ajouterReponse(idCasting,idActeur,nom, prenom,age,tel,photo);
-		return "/application/annonces";
+		session.removeAttribute("film");
+		session.removeAttribute("role");
+		session.removeAttribute("idCasting");
+		return "redirect:/application/annonces";
 	}
 	
 	@PostMapping("/modifierCasting")
@@ -221,6 +228,12 @@ public class applicationController {
 	public String modifierRoleCasting(@RequestParam Long idCasting,@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe, HttpSession session) {
 		
 		castingService.updateCasting(idCasting,nomFilm, role, Integer.parseInt(ageMin), Integer.parseInt(ageMax), sexe,session.getAttribute("mail").toString());
+		session.removeAttribute("modNomFilm");
+		session.removeAttribute("modRole");
+		session.removeAttribute("modIdCasting");
+		session.removeAttribute("modAgeMin");
+		session.removeAttribute("modAgeMax");
+		session.removeAttribute("modSexe");
 		return "/application/evenementDC";
 	} 
 	

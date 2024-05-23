@@ -21,17 +21,16 @@
     		<p onclick="confirmLogout();">Se déconnecter</p>
     	</div>
     	<div class="btn">
-    		<p>Mes informations</p>
+    		<p onclick="mesInformations()">Mes informations</p>
     	</div>
     	<div class="btn">
     		<p onclick="lesAnnonces();">Les annonces</p>
     	</div>
     	<div class="btn">
-    		<p>mon emploi du temps</p>
+    		<p onclick="emploiDuTemps()">mon emploi du temps</p>
     	</div>
     </div>
 
-   <form id="castingForm" action="/application/repondreAnnonce" method="post">
     <table>
         <thead>
             <tr>
@@ -45,19 +44,21 @@
         </thead>
         <tbody>
             <tr th:each="casting, iterStat : ${castings}">
-                <td th:text="${casting.nomFilm}">Film Example</td>
-                <td th:text="${casting.role}">Role Example</td>
-                <td th:text="${casting.ageMin}">20</td>
-                <td th:text="${casting.ageMax}">30</td>
-                <td th:text="${casting.sexe}">H/F</td>
-                <!-- Champs de formulaire invisibles pour stocker les données -->
-                <input type="hidden" name="film" th:value="${casting.nomFilm}"/>
-                <input type="hidden" name="role" th:value="${casting.role}"/>
-                <input type="hidden" name="ageMin" th:value="${casting.ageMin}"/>
-                <input type="hidden" name="ageMax" th:value="${casting.ageMax}"/>
-                <input type="hidden" name="sexe" th:value="${casting.sexe}"/>
-                <input type="hidden" name="idCasting" th:value="${casting.id}"/>
-                <td><button type="submit" name="submit" value="Répondre">Répondre</button></td>
+            	<form id="castingForm" action="/application/repondreAnnonce" method="post">
+	                <td th:text="${casting.nomFilm}">Film Example</td>
+	                <td th:text="${casting.role}">Role Example</td>
+	                <td th:text="${casting.ageMin}">20</td>
+	                <td th:text="${casting.ageMax}">30</td>
+	                <td th:text="${casting.sexe}">H/F</td>
+	                <!-- Champs de formulaire invisibles pour stocker les données -->
+	                <input type="hidden" name="film" th:value="${casting.nomFilm}"/>
+	                <input type="hidden" name="role" th:value="${casting.role}"/>
+	                <input type="hidden" name="ageMin" th:value="${casting.ageMin}"/>
+	                <input type="hidden" name="ageMax" th:value="${casting.ageMax}"/>
+	                <input type="hidden" name="sexe" th:value="${casting.sexe}"/>
+	                <input type="hidden" name="idCasting" th:value="${casting.id}"/>
+	                <td><button type="submit" name="submit" value="Répondre">Répondre</button></td>
+	               </form>
             </tr>
         </tbody>
     </table>
