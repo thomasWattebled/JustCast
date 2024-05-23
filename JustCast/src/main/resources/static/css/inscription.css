@@ -53,7 +53,8 @@ input[type="text"],
 input[type="tel"],
 input[type="number"],
 input[type="file"],
-input[type="submit"] {
+input[type="submit"],
+input[type="password"] {
     width: calc(100% - 20px);
     padding: 10px;
     margin-top: 10px;
