@@ -17,8 +17,8 @@ public class CastingServiceImpl implements CastingService{
 	private CastingRepository repoCasting;
 
 	@Override
-	public void ajouterCasting(String nomFilm, String role, Integer ageMin, Integer ageMax, String sexe, String createur) {
-		repoCasting.save(new Casting(nomFilm,role,ageMin,ageMax,sexe,createur));
+	public void ajouterCasting(String nomFilm, String role, Integer ageMin, Integer ageMax, String sexe, String createur,Integer cloture) {
+		repoCasting.save(new Casting(nomFilm,role,ageMin,ageMax,sexe,createur,cloture));
 	}
 
 	@Override
@@ -30,6 +30,8 @@ public class CastingServiceImpl implements CastingService{
 	public List<Casting> getCastingByCreateur(String email) {
 		return repoCasting.findByCreateur(email); 
 	}
+	
+	
 
 	@Override
 	public List<Casting> getAllCasting() {
@@ -43,7 +45,7 @@ public class CastingServiceImpl implements CastingService{
 	}
 
 	@Override
-	public Casting updateCasting(Long idCasting, String nomFilm, String role, int ageMin, int ageMax, String sexe, String string) {
+	public Casting updateCasting(Long idCasting, String nomFilm, String role, int ageMin, int ageMax, String sexe, String string,Integer cloture) {
 		
 		Optional<Casting> casting = repoCasting.findById(idCasting);
 		
@@ -54,7 +56,7 @@ public class CastingServiceImpl implements CastingService{
 			getCasting.setAgeMin(ageMin);
 			getCasting.setRole(role);
 			getCasting.setSexe(sexe);
-			
+			getCasting.setCloture(cloture);
 			return repoCasting.save(getCasting);
 		}
 		
@@ -63,6 +65,11 @@ public class CastingServiceImpl implements CastingService{
             throw new RuntimeException("Casting not found with id " + idCasting);
         }
 		
+	}
+
+	@Override
+	public List<Casting> getCastingByCloture(int cloture) {
+				return repoCasting.findByCloture(cloture);
 	}
 }
 

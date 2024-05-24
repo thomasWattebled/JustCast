@@ -168,7 +168,8 @@ public class applicationController {
 	
 	@PostMapping("/creationRoleCasting")
 	public String creationRoleCasting(@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe, HttpSession session) {
-		castingService.ajouterCasting(nomFilm, role, Integer.parseInt(ageMin), Integer.parseInt(ageMax), sexe,session.getAttribute("mail").toString());
+		//0 car casting ouvert
+		castingService.ajouterCasting(nomFilm, role, Integer.parseInt(ageMin), Integer.parseInt(ageMax), sexe,session.getAttribute("mail").toString(),0);
 		return "/application/evenementDC";
 	} 
 	
@@ -195,7 +196,7 @@ public class applicationController {
 	public String annonces(HttpSession session, Model model) {
 		
 		List<Casting> castings = new ArrayList<>();
-		castings = castingService.getAllCasting();
+		castings = castingService.getCastingByCloture(0);
 		model.addAttribute("castings",castings);
 		
 		return "/application/annonces";
@@ -222,28 +223,33 @@ public class applicationController {
 	}
 	
 	@PostMapping("/modifierCasting")
-	public String modifierCasting(@RequestParam Long idCasting,@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe, HttpSession session) {
+	public String modifierCasting(@RequestParam Long idCasting,@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe,@RequestParam Integer cloture, HttpSession session,Model model) {
 			
-		session.setAttribute("modNomFilm", nomFilm);
-		session.setAttribute("modRole", role);
-		session.setAttribute("modIdCasting", idCasting);
-		session.setAttribute("modAgeMin", ageMin);
-		session.setAttribute("modAgeMax", ageMax);
-		session.setAttribute("modSexe", sexe);
-		
+		model.addAttribute("modNomFilm", nomFilm);
+		model.addAttribute("modRole", role);
+		model.addAttribute("modIdCasting", idCasting);
+		model.addAttribute("modAgeMin", ageMin);
+		model.addAttribute("modAgeMax", ageMax);
+		model.addAttribute("modSexe", sexe);
+		model.addAttribute("modCloture", cloture);
 		return "/application/modifierEvenementDC";
 	} 
 	
 	@PostMapping("/modifierRoleCasting")
-	public String modifierRoleCasting(@RequestParam Long idCasting,@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe, HttpSession session) {
+	public String modifierRoleCasting(@RequestParam Long idCasting,@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe,@RequestParam String cloture, HttpSession session) {
+			System.out.println(cloture);
+			castingService.updateCasting(idCasting,nomFilm, role, Integer.parseInt(ageMin), Integer.parseInt(ageMax), sexe,session.getAttribute("mail").toString(),Integer.parseInt(cloture));
 		
-		castingService.updateCasting(idCasting,nomFilm, role, Integer.parseInt(ageMin), Integer.parseInt(ageMax), sexe,session.getAttribute("mail").toString());
-		session.removeAttribute("modNomFilm");
-		session.removeAttribute("modRole");
-		session.removeAttribute("modIdCasting");
-		session.removeAttribute("modAgeMin");
-		session.removeAttribute("modAgeMax");
-		session.removeAttribute("modSexe");
+			
+		
+		
+		//session.removeAttribute("modNomFilm");
+		//session.removeAttribute("modRole");
+		//session.removeAttribute("modIdCasting");
+		//session.removeAttribute("modAgeMin");
+		//session.removeAttribute("modAgeMax");
+		//session.removeAttribute("modSexe");
+		//session.removeAttribute("modCloture");
 		return "/application/evenementDC";
 	} 
 	

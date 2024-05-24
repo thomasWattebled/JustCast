@@ -12,5 +12,7 @@ public interface CastingRepository extends CrudRepository <Casting,Long>{
 	Iterable<Casting> findByNomFilmAndRole(String nomFilm, String role);
 	
 	List<Casting> findByCreateur(String email);
+	
+	List<Casting> findByCloture(int cloture);
 
 }
