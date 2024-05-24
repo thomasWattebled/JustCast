@@ -51,3 +51,7 @@ function envoieForm(idForm) {
 function gererActeurs(){
 	window.location.href = 'gererActeur';
 }
+
+function trouverActeur(){
+	window.location.href = 'trouverActeur';
+}

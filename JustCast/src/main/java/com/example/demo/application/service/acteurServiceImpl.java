@@ -1,5 +1,7 @@
 package com.example.demo.application.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,11 @@ public class acteurServiceImpl implements acteurService{
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public List<acteur> getAllAuteurs() {
+		return (List<acteur>) repoActeur.findAll();
 	}
 
 }

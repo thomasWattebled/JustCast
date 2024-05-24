@@ -271,4 +271,15 @@ public class applicationController {
 	public String gererActeur(HttpSession session) {
 		return "/application/gererActeur";
 	}
+
+	@GetMapping("/trouverActeur")
+	public String trouverActeur(Model model) {
+		List<acteur> acteurs = acteurService.getAllAuteurs();
+		model.addAttribute("acteurs",acteurs);
+		return "/application/trouverActeur";
+	}
+
 }
+
+
+
