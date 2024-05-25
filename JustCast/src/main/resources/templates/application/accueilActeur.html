@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Acteur JustCast</title>
+    <link href="/css/accueilDC.css" rel="stylesheet">
+     <script src ="/script/script.js"> </script>
+</head>
+
+<body>
+
+    <div id="entete">
+    	<p th:text="'Acteur - ' + ${session.nom} + ' ' + ${session.prenom} "/>
+        <img src="https://justcast4.wordpress.com/wp-content/uploads/2024/05/image.png?w=300" alt="Logo JustCast">
+        <p>JustCast - Accueil</p>
+    </div>
+    
+    <div id="barre">
+    	<div class="btn">
+    		<p onclick="confirmLogout();">Se déconnecter</p>
+    	</div>
+    	<div class="btn">
+    		<p onclick="mesInformations()">Mes informations</p>
+    	</div>
+    	<div class="btn">
+    		<p onclick="lesAnnonces()">Les annonces</p>
+    	</div>
+    	<div class="btn">
+    		<p onclick="emploiDuTemps()">Mon emploie du temps</p>
+    	</div>
+    </div>
+    
+   
+   	<div id="blocks">
+    <div class="block" onclick="lesAnnonces()">
+        <img src="https://cdn.pixabay.com/photo/2019/11/07/20/48/cinema-4609877_640.jpg" alt="Image">
+        <div class="block-content">
+            <h3>Les annonces</h3>
+            <p>Vous permet de visualiser les annonces de casting et d'y postuler</p>
+        </div>
+    </div>
+    
+    <div class="block" onclick="mesPostulations()">
+        <img src="https://cdn.pixabay.com/photo/2019/11/07/20/48/cinema-4609877_640.jpg" alt="Image">
+        <div class="block-content">
+            <h3>Mes postulation</h3>
+            <p>Vous permet de visualiser les annonces de casting aux quelles vous avez postulé...</p>
+        </div>
+    </div>
+    
+    <div class="block" onclick="mesInformations()">
+        <img src="https://cdn.pixabay.com/photo/2018/07/12/21/32/subscribe-3534409_640.jpg" alt="Image" onclick="mesInformations()">
+        <div class="block-content">
+            <h3>Mes informations</h3>
+            <p>Vous permet de gérer vos informations ...</p>
+        </div>
+    </div>
+    
+    <div class="block" onclick="emploiDuTemps()">
+        <img src="https://cdn.pixabay.com/photo/2018/05/01/11/34/love-3365338_640.jpg" alt="Image">
+        <div class="block-content">
+            <h3>Mon emploi du temps</h3>
+            <p>Vous permet de visualiser votre emploi du temps ...</p>
+        </div>
+    </div>
+</div>
+	
+	
+</body>
+
+</html>

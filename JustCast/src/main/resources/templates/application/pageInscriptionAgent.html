@@ -1,0 +1,28 @@
+<html xmlns:th="https://www.thymeleaf.org" >
+
+
+	<head>
+		<link href="/css/inscription.css" rel="stylesheet">
+	</head>
+
+	<body>
+	
+		<div id="entete">
+        	<img src="https://justcast4.wordpress.com/wp-content/uploads/2024/05/image.png?w=300" alt="Logo JustCast">
+        	<p>JustCast - Inscription</p>
+    	</div>
+		
+		<h2>Inscription Agent : </h2>
+		
+		<form action="/application/inscriptionAgent" method="post">
+			<p>Nom : <input type="text" name="nom"></p>
+			<p>Prenom : <input type="text" name="prenom"></p>
+			<p>numéro de téléphone : <input type="tel" name="tel"></p>
+			<p>Mail : <input type="text" name="mail"></p>
+			<p>Mot de passe : <input type="password" name="mdp"></p>
+			<input type="submit" value="Inscription">
+		</form>	
+		
+			
+	</body>
+</html>
