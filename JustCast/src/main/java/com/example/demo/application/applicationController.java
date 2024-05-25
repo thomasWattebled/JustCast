@@ -1,8 +1,13 @@
 package com.example.demo.application;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import java.time.Month;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -193,8 +198,166 @@ public class applicationController {
 		return "/application/informations";
 	}
 
+	@GetMapping("/emploiDuTemps/{day}/{month}/{year}")
+	public String emploiDuTempsSemaine(HttpSession session, Model model, @PathVariable("day") int day, @PathVariable("month") int month, @PathVariable("year") int year) {
+		LocalDate date = LocalDate.of(year, month, day);
+
+		int dayWeek = date.getDayOfWeek().getValue();
+		int maxDayOfMonth = (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0) ? date.getMonth().maxLength() : date.getMonth().minLength();
+
+		// Pour le bouton de la semaine suivante
+		int dayNextWeek = day + 7;
+		int monthNextWeek;
+		int yearNextWeek;
+		if (dayNextWeek > maxDayOfMonth) {
+			dayNextWeek = dayNextWeek - maxDayOfMonth;
+			if (month == 12) {
+				monthNextWeek = 1;
+				yearNextWeek = year + 1;
+			} else {
+				monthNextWeek = month + 1;
+				yearNextWeek = year;
+			}
+			
+		} else {
+			monthNextWeek = month;
+			yearNextWeek = year;
+		}
+
+		String semaineSuivante = new String("\"/application/emploiDuTemps/" + dayNextWeek + "/" + monthNextWeek + "/" + yearNextWeek + "\"");
+		model.addAttribute("semaineSuivante", semaineSuivante);
+
+		// Pour le bouton de la semaine précédente
+
+		int dayPreviousWeek = day - 7;
+		int monthPreviousWeek;
+		int yearPreviousWeek;
+
+		if (dayPreviousWeek < 1) {
+			int maxDayPreviousMonth;
+			if (month == 1) {
+				monthPreviousWeek = 12;
+				yearPreviousWeek = year - 1;
+				maxDayPreviousMonth = (yearPreviousWeek % 400 == 0) || (yearPreviousWeek % 4 == 0 && yearPreviousWeek % 100 != 0) ? Month.of(monthPreviousWeek).maxLength() : Month.of(monthPreviousWeek).minLength();
+				dayPreviousWeek = maxDayPreviousMonth + dayPreviousWeek;
+			} else {
+				monthPreviousWeek = month - 1;
+				yearPreviousWeek = year;
+				maxDayPreviousMonth = (yearPreviousWeek % 400 == 0) || (yearPreviousWeek % 4 == 0 && yearPreviousWeek % 100 != 0) ? Month.of(monthPreviousWeek).maxLength() : Month.of(monthPreviousWeek).minLength();
+				dayPreviousWeek = maxDayPreviousMonth + dayPreviousWeek;
+			}
+		} else {
+			monthPreviousWeek = month;
+			yearPreviousWeek = year;
+		}
+
+		String semainePrecedente = new String("\"/application/emploiDuTemps/" + dayPreviousWeek + "/" + monthPreviousWeek + "/" + yearPreviousWeek + "\"");
+		model.addAttribute("semainePrecedente", semainePrecedente);
+
+		// On met dans le modèle les numéros du mois des jours de la semaine, si jour hors du mois actuel alors -1
+
+		int mondayValue = (day - dayWeek + 1) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 1);
+		int tuesdayValue = (day - dayWeek + 2) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 2);
+		int wednesdayValue = (day - dayWeek + 3) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 3);
+		int thursdayValue = (day - dayWeek + 4) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 4);
+		int fridayValue = (day - dayWeek + 5) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 5);
+		int saturdayValue = (day - dayWeek + 6) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 6);
+		int sundayValue = (day - dayWeek + 7) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 7);
+
+		model.addAttribute("month", month);
+		model.addAttribute("year", year);
+
+		model.addAttribute("mondayValue", mondayValue);
+		model.addAttribute("tuesdayValue", tuesdayValue);
+		model.addAttribute("wednesdayValue", wednesdayValue);
+		model.addAttribute("thursdayValue", thursdayValue);
+		model.addAttribute("fridayValue", fridayValue);
+		model.addAttribute("saturdayValue", saturdayValue);
+		model.addAttribute("sundayValue", sundayValue);
+		return "/application/emploiDuTemps";
+	}
+
 	@GetMapping("/emploiDuTemps")
-	public String emploiDuTemps(HttpSession session) {
+	public String emploiDuTemps(HttpSession session, Model model) {
+		LocalDate date = LocalDate.now();
+
+		int day = date.getDayOfMonth();
+		int month = date.getMonthValue();
+		int year = date.getYear();
+		int dayWeek = date.getDayOfWeek().getValue();
+		int maxDayOfMonth = (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0) ? date.getMonth().maxLength() : date.getMonth().minLength();
+
+		// Pour le bouton de la semaine suivante
+		int dayNextWeek = day + 7;
+		int monthNextWeek;
+		int yearNextWeek;
+		if (dayNextWeek > maxDayOfMonth) {
+			System.out.println("passe");
+			dayNextWeek = dayNextWeek - maxDayOfMonth;
+			if (month == 12) {
+				monthNextWeek = 1;
+				yearNextWeek = year + 1;
+			} else {
+				monthNextWeek = month + 1;
+				yearNextWeek = year;
+			}
+			
+		} else {
+			monthNextWeek = month;
+			yearNextWeek = year;
+		}
+
+		String semaineSuivante = new String("\"/application/emploiDuTemps/" + dayNextWeek + "/" + monthNextWeek + "/" + yearNextWeek + "\"");
+		model.addAttribute("semaineSuivante", semaineSuivante);
+
+		// Pour le bouton de la semaine précédente
+
+		int dayPreviousWeek = day - 7;
+		int monthPreviousWeek;
+		int yearPreviousWeek;
+
+		if (dayPreviousWeek < 1) {
+			int maxDayPreviousMonth;
+			if (month == 1) {
+				monthPreviousWeek = 12;
+				yearPreviousWeek = year - 1;
+				maxDayPreviousMonth = (yearPreviousWeek % 400 == 0) || (yearPreviousWeek % 4 == 0 && yearPreviousWeek % 100 != 0) ? Month.of(monthPreviousWeek).maxLength() : Month.of(monthPreviousWeek).minLength();
+				dayPreviousWeek = maxDayPreviousMonth + dayPreviousWeek;
+			} else {
+				monthPreviousWeek = month - 1;
+				yearPreviousWeek = year;
+				maxDayPreviousMonth = (yearPreviousWeek % 400 == 0) || (yearPreviousWeek % 4 == 0 && yearPreviousWeek % 100 != 0) ? Month.of(monthPreviousWeek).maxLength() : Month.of(monthPreviousWeek).minLength();
+				dayPreviousWeek = maxDayPreviousMonth + dayPreviousWeek;
+			}
+		} else {
+			monthPreviousWeek = month;
+			yearPreviousWeek = year;
+		}
+
+		String semainePrecedente = new String("\"/application/emploiDuTemps/" + dayPreviousWeek + "/" + monthPreviousWeek + "/" + yearPreviousWeek + "\"");
+		model.addAttribute("semainePrecedente", semainePrecedente);
+
+		// On met dans le modèle les numéros du mois des jours de la semaine, si jour hors du mois actuel alors -1
+
+		int mondayValue = (day - dayWeek + 1) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 1);
+		int tuesdayValue = (day - dayWeek + 2) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 2);
+		int wednesdayValue = (day - dayWeek + 3) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 3);
+		int thursdayValue = (day - dayWeek + 4) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 4);
+		int fridayValue = (day - dayWeek + 5) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 5);
+		int saturdayValue = (day - dayWeek + 6) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 6);
+		int sundayValue = (day - dayWeek + 7) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 7);
+
+		model.addAttribute("month", month);
+		model.addAttribute("year", year);
+
+		model.addAttribute("mondayValue", mondayValue);
+		model.addAttribute("tuesdayValue", tuesdayValue);
+		model.addAttribute("wednesdayValue", wednesdayValue);
+		model.addAttribute("thursdayValue", thursdayValue);
+		model.addAttribute("fridayValue", fridayValue);
+		model.addAttribute("saturdayValue", saturdayValue);
+		model.addAttribute("sundayValue", sundayValue);
+
 		return "/application/emploiDuTemps";
 	}
 	

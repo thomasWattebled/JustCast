@@ -56,19 +56,24 @@
     	</div>
     </div>
     
-    <h1>Emploi du Temps Hebdomadaire</h1>
+    <h1>Emploi du Temps de la semaine</h1>
+
+    <h2 th:text="${month} + '/' + ${year}"></h2>
     
+    <button th:attr="onclick='chargerSemaine(' + ${semainePrecedente} + ')'">Semaine précédente</button>
+    <button th:attr="onclick='chargerSemaine(' + ${semaineSuivante} + ')'">Semaine suivante</button>
+
     <table>
         <thead>
             <tr>
                 <th>Heure</th>
-                <th>Lundi</th>
-                <th>Mardi</th>
-                <th>Mercredi</th>
-                <th>Jeudi</th>
-                <th>Vendredi</th>
-                <th>Samedi</th>
-                <th>Dimanche</th>
+                <th th:text="${mondayValue != -1} ? 'Lundi ' + ${mondayValue} : 'Lundi'"></th>
+                <th th:text="${tuesdayValue != -1} ? 'Mardi ' + ${tuesdayValue} : 'Mardi'"></th>
+                <th th:text="${wednesdayValue != -1} ? 'Mercredi ' + ${wednesdayValue} : 'Mercredi'"></th>
+                <th th:text="${thursdayValue != -1} ? 'Jeudi ' + ${thursdayValue} : 'Jeudi'"></th>
+                <th th:text="${fridayValue != -1} ? 'Vendredi ' + ${fridayValue} : 'Vendredi'"></th>
+                <th th:text="${saturdayValue != -1} ? 'Samedi ' + ${saturdayValue} : 'Samedi'"></th>
+                <th th:text="${sundayValue != -1} ? 'Dimanche ' + ${sundayValue} : 'Dimanche'"></th>
             </tr>
         </thead>
         <tbody>

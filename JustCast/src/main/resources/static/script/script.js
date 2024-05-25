@@ -60,3 +60,7 @@ function trouverActeur(){
 function voirActeur(){
 	window.location.href = 'voirActeur';
 }
+
+function chargerSemaine(semaine) {
+    window.location.href = semaine;
+}
