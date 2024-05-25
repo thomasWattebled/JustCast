@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>evenement Directeur de casting JustCast</title>
+    <title>Agent JustCast</title>
     <link href="/css/accueilDC.css" rel="stylesheet">
      <script src ="/script/script.js"> </script>
 </head>
@@ -47,13 +47,17 @@
 	    <td>Prenom</td>
 	    <td>Age</td>
 	    <td>Telephone</td>
+	    <td>Ajouter</td>
 	  </tr>
 	<tr th:each="acteur : ${acteurs}"  >
-
-		<td th:text="${acteur.nom}"></td>
-		<td th:text="${acteur.prenom}"></td>
-		<td th:text="${acteur.age}"></td>
-		<td th:text="${acteur.tel}"></td>
+		<form action="/application/addLienAgentActeur" method="post">
+			<td th:text="${acteur.nom}"></td>
+			<td th:text="${acteur.prenom}"></td>
+			<td th:text="${acteur.age}"></td>
+			<td th:text="${acteur.tel}"></td>
+			<input type="hidden" name="idActeur" th:value="${acteur.id}"/>
+			<td><button type="submit" name="submit" value="Ajouter">Ajouter</button></td>
+		</form>
 	</tr>
 	<table>
 

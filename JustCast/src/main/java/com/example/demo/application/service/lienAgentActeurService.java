@@ -1,7 +1,11 @@
 package com.example.demo.application.service;
 
-public interface lienAgentActeurService {
+import java.util.List;
+
+public interface lienAgentActeurService{
 	
 	void ajouterLien(Long idAgent,Long idActeur);
+	
+	List<Long> getIdActeurByAgent(Long idAgent);
 
 }

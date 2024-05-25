@@ -37,5 +37,15 @@ public class acteurServiceImpl implements acteurService{
 	public List<acteur> getAllAuteurs() {
 		return (List<acteur>) repoActeur.findAll();
 	}
+	
+	@Override
+	public List<acteur> getActeursNotInIds(List<Long> ids) {
+        return repoActeur.findActeursNotInIds(ids);
+    }
+
+	@Override
+	public List<acteur> getActeursById(List<Long> ids) {
+		return repoActeur.findActeursById(ids);
+	}
 
 }

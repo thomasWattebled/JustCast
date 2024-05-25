@@ -1,6 +1,7 @@
 package com.example.demo.application;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import com.example.demo.application.service.CastingService;
 import com.example.demo.application.service.acteurService;
 import com.example.demo.application.service.agentService;
 import com.example.demo.application.service.reponseCastingService;
+import com.example.demo.application.service.lienAgentActeurService;
 
 
 @Controller
@@ -47,6 +49,9 @@ public class applicationController {
 	
 	@Autowired
 	private reponseCastingService reponseCastingService;
+	
+	@Autowired
+	private lienAgentActeurService lienAgentActeurService;
 	
 	@GetMapping("/home")
 	public String home() {
@@ -116,6 +121,7 @@ public class applicationController {
 				session.setAttribute("prenom",verification.getPrenom());
 				session.setAttribute("mail",verification.getMail());
 				session.setAttribute("tel",verification.getTel());
+				session.setAttribute("idAgent", verification.getId());
 				return "application/accueilAgent";
 			}
 		}
@@ -168,7 +174,8 @@ public class applicationController {
 	
 	@PostMapping("/creationRoleCasting")
 	public String creationRoleCasting(@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe, HttpSession session) {
-		castingService.ajouterCasting(nomFilm, role, Integer.parseInt(ageMin), Integer.parseInt(ageMax), sexe,session.getAttribute("mail").toString());
+		//0 car casting ouvert
+		castingService.ajouterCasting(nomFilm, role, Integer.parseInt(ageMin), Integer.parseInt(ageMax), sexe,session.getAttribute("mail").toString(),0);
 		return "/application/evenementDC";
 	} 
 	
@@ -195,7 +202,7 @@ public class applicationController {
 	public String annonces(HttpSession session, Model model) {
 		
 		List<Casting> castings = new ArrayList<>();
-		castings = castingService.getAllCasting();
+		castings = castingService.getCastingByCloture(0);
 		model.addAttribute("castings",castings);
 		
 		return "/application/annonces";
@@ -222,28 +229,33 @@ public class applicationController {
 	}
 	
 	@PostMapping("/modifierCasting")
-	public String modifierCasting(@RequestParam Long idCasting,@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe, HttpSession session) {
+	public String modifierCasting(@RequestParam Long idCasting,@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe,@RequestParam Integer cloture, HttpSession session,Model model) {
 			
-		session.setAttribute("modNomFilm", nomFilm);
-		session.setAttribute("modRole", role);
-		session.setAttribute("modIdCasting", idCasting);
-		session.setAttribute("modAgeMin", ageMin);
-		session.setAttribute("modAgeMax", ageMax);
-		session.setAttribute("modSexe", sexe);
-		
+		model.addAttribute("modNomFilm", nomFilm);
+		model.addAttribute("modRole", role);
+		model.addAttribute("modIdCasting", idCasting);
+		model.addAttribute("modAgeMin", ageMin);
+		model.addAttribute("modAgeMax", ageMax);
+		model.addAttribute("modSexe", sexe);
+		model.addAttribute("modCloture", cloture);
 		return "/application/modifierEvenementDC";
 	} 
 	
 	@PostMapping("/modifierRoleCasting")
-	public String modifierRoleCasting(@RequestParam Long idCasting,@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe, HttpSession session) {
+	public String modifierRoleCasting(@RequestParam Long idCasting,@RequestParam String nomFilm,@RequestParam String role,@RequestParam String ageMin,@RequestParam String ageMax,@RequestParam String sexe,@RequestParam String cloture, HttpSession session) {
+			System.out.println(cloture);
+			castingService.updateCasting(idCasting,nomFilm, role, Integer.parseInt(ageMin), Integer.parseInt(ageMax), sexe,session.getAttribute("mail").toString(),Integer.parseInt(cloture));
 		
-		castingService.updateCasting(idCasting,nomFilm, role, Integer.parseInt(ageMin), Integer.parseInt(ageMax), sexe,session.getAttribute("mail").toString());
-		session.removeAttribute("modNomFilm");
-		session.removeAttribute("modRole");
-		session.removeAttribute("modIdCasting");
-		session.removeAttribute("modAgeMin");
-		session.removeAttribute("modAgeMax");
-		session.removeAttribute("modSexe");
+			
+		
+		
+		//session.removeAttribute("modNomFilm");
+		//session.removeAttribute("modRole");
+		//session.removeAttribute("modIdCasting");
+		//session.removeAttribute("modAgeMin");
+		//session.removeAttribute("modAgeMax");
+		//session.removeAttribute("modSexe");
+		//session.removeAttribute("modCloture");
 		return "/application/evenementDC";
 	} 
 	
@@ -273,12 +285,31 @@ public class applicationController {
 	}
 
 	@GetMapping("/trouverActeur")
-	public String trouverActeur(Model model) {
-		List<acteur> acteurs = acteurService.getAllAuteurs();
+	public String trouverActeur(Model model,HttpSession session) {
+		/*List<acteur> acteurs = acteurService.getAllAuteurs();*/
+		List<Long> ids = lienAgentActeurService.getIdActeurByAgent((Long) session.getAttribute("idAgent"));
+		List<acteur> acteurs = acteurService.getActeursNotInIds(ids);
 		model.addAttribute("acteurs",acteurs);
 		return "/application/trouverActeur";
 	}
-
+ 
+	@PostMapping("/addLienAgentActeur")
+	public String addLienAgentActeur(@RequestParam Long idActeur,HttpSession session) {
+		lienAgentActeurService.ajouterLien((Long) session.getAttribute("idAgent"), idActeur);
+		return "/application/gererActeur";
+	}
+	
+	
+	@GetMapping("/voirActeur")
+	public String voirActeur(Model model,HttpSession session) {
+		/*List<acteur> acteurs = acteurService.getAllAuteurs();*/
+		List<Long> ids = lienAgentActeurService.getIdActeurByAgent((Long) session.getAttribute("idAgent"));
+		System.out.println(ids);
+		List<acteur> acteurs = acteurService.getActeursById(ids);
+		model.addAttribute("acteurs",acteurs);
+		return "/application/voirActeur";
+	}
+	
 }
 
 

@@ -15,8 +15,11 @@ public class Casting {
 	private Integer ageMax;
 	private String sexe;
 	private String createur;
+	// cloture 0 quand ouvert et 1 qaund ferme
+	private int cloture;
 	
-	public Casting(String nomFilm, String role, Integer ageMin, Integer ageMax, String sexe,String createur) {
+	public Casting(String nomFilm, String role, Integer ageMin, Integer ageMax, String sexe,String createur,Integer cloture) {
+		
 		super();
 		this.nomFilm = nomFilm;
 		this.role = role;
@@ -24,6 +27,7 @@ public class Casting {
 		this.ageMax = ageMax;
 		this.sexe = sexe;
 		this.createur=createur;
+		this.cloture = cloture;
 	}
 
 	public Casting() {}
@@ -86,7 +90,13 @@ public class Casting {
 		this.createur = createur;
 	}
 	
-	
+	public Integer getCloture() {
+		return cloture;
+	}
+
+	public void setCloture(Integer cloture) {
+		this.cloture = cloture;
+	}
 	
 }
 

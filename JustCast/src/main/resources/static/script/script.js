@@ -55,3 +55,8 @@ function gererActeurs(){
 function trouverActeur(){
 	window.location.href = 'trouverActeur';
 }
+
+
+function voirActeur(){
+	window.location.href = 'voirActeur';
+}

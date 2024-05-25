@@ -12,4 +12,8 @@ public interface acteurService {
 
 	List<acteur> getAllAuteurs();
 
+	List<acteur> getActeursNotInIds(List<Long> ids);
+
+	List<acteur> getActeursById(List<Long> ids);
+
 }
