@@ -4,19 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.application.classBDD.Evenement;
 import com.example.demo.application.repository.EvenementRepository;
 
+@Service
 public class EvenementServiceImpl implements EvenementService {
     
     @Autowired
 	private EvenementRepository evenementRepository;
 
     @Override
-    public List<Evenement> getEvenementByUserEvenementIdAndYearAndMonthAndDay(long idUserEvenement, long year, long month, long day) {
+    public List<Evenement> getEvenementByUserIdAndUserTypeIdAndYearAndMonthAndDay(long userId, int userType, long year, long month, long day) {
         List<Evenement> listeEvenements = new ArrayList<Evenement>();
-        Iterable<Evenement> evenementIterable = evenementRepository.findByIdUserEvenementAndYearAndMonthAndDay(idUserEvenement, year, month, day);
+        Iterable<Evenement> evenementIterable = evenementRepository.findByUserIdAndUserTypeAndYearAttAndMonthAttAndDayAtt(userId, userType, year, month, day);
         for (Evenement event : evenementIterable) {
             listeEvenements.add(event);
         }
@@ -24,9 +26,9 @@ public class EvenementServiceImpl implements EvenementService {
     }
 	
     @Override
-	public boolean evenementExiste(long idUserEvenement, long year, long month, long day, long hour) {
+	public boolean evenementExiste(long userId, int userType, long year, long month, long day, long hour) {
         List<Evenement> listeEvenements = new ArrayList<Evenement>();
-        Iterable<Evenement> evenementIterable = evenementRepository.findByIdUserEvenementAndYearAndMonthAndDay(idUserEvenement, year, month, day);
+        Iterable<Evenement> evenementIterable = evenementRepository.findByUserIdAndUserTypeAndYearAttAndMonthAttAndDayAttAndHourAtt(userId, userType, year, month, day, hour);
         for (Evenement event : evenementIterable) {
             listeEvenements.add(event);
         }
@@ -34,9 +36,9 @@ public class EvenementServiceImpl implements EvenementService {
     }
 
     @Override
-    public void ajouterEvenement(long idUserEvenement, long year, long month, long day, long hour, String libelle, String description) {
-        if (!this.evenementExiste(idUserEvenement, year, month, day, hour)) {
-            evenementRepository.save(new Evenement(idUserEvenement, year, month, day, hour, libelle, description));
+    public void ajouterEvenement(long userId, int userType, long year, long month, long day, long hour, String libelle, String description) {
+        if (!this.evenementExiste(userId, userType, year, month, day, hour)) {
+            evenementRepository.save(new Evenement(userId, userType, year, month, day, hour, libelle, description));
         }
     }
 }

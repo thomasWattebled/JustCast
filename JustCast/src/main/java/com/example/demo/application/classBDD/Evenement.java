@@ -9,73 +9,85 @@ public class Evenement {
     
     private long id;
     // The id of the user that has the event
-    private long idUserEvenement;
-    private long year;
-    private long month;
-    private long day;
-    private long hour;
+    private long userId;
+    // 0 for DC, 1 for Actor, 2 for Agent
+    private int userType;
+    private long yearAtt;
+    private long monthAtt;
+    private long dayAtt;
+    private long hourAtt;
     private String libelle;
     private String description;
 
-    public Evenement(long idUserEvenement, long year, long month, long day, long hour, String libelle, String description) {
+    public Evenement(long userId, int userType, long yearAtt, long monthAtt, long dayAtt, long hourAtt, String libelle, String description) {
         super();
-        this.idUserEvenement = idUserEvenement;
-        this.year = year;
-        this.month = month;
-        this.day = day;
-        this.hour = hour;
+        this.userId = userId;
+        this.yearAtt = yearAtt;
+        this.monthAtt = monthAtt;
+        this.dayAtt = dayAtt;
+        this.hourAtt = hourAtt;
         this.libelle = libelle;
         this.description = description;
     }
 
+    public Evenement() {}
+
     @Id
 	@GeneratedValue
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
     
-    public long getIdUserEvenement() {
-        return this.idUserEvenement;
+    public long getUserId() {
+        return this.userId;
     }
 
-    public void setIdUserEvenement(long idUserEvenement) {
-        this.idUserEvenement = idUserEvenement;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-    public long getYear() {
-        return this.year;
+    public int getUserType () {
+        return this.userType;
     }
 
-    public void setYear(long year) {
-        this.year = year;
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
+
+    public long getYearAtt() {
+        return this.yearAtt;
+    }
+
+    public void setYearAtt(long yearAtt) {
+        this.yearAtt = yearAtt;
     }
     
-    public long getMonth() {
-        return this.month;
+    public long getMonthAtt() {
+        return this.monthAtt;
     }
 
-    public void setMonth(long month) {
-        this.month = month;
+    public void setMonthAtt(long monthAtt) {
+        this.monthAtt = monthAtt;
     }
 
-    public long getDay() {
-        return this.day;
+    public long getDayAtt() {
+        return this.dayAtt;
     }
 
-    public void setDay(long day) {
-        this.day = day;
+    public void setDayAtt(long dayAtt) {
+        this.dayAtt = dayAtt;
     }
 
-    public long getHour() {
-        return this.hour;
+    public long getHourAtt() {
+        return this.hourAtt;
     }
 
-    public void setHour(long hour) {
-        this.hour = hour;
+    public void setHourAtt(long hourAtt) {
+        this.hourAtt = hourAtt;
     }
 
     public String getLibelle() {

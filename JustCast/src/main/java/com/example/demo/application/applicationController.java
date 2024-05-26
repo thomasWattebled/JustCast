@@ -26,10 +26,12 @@ import jakarta.servlet.http.HttpSession;
 
 import com.example.demo.application.classBDD.Agent;
 import com.example.demo.application.classBDD.Casting;
+import com.example.demo.application.classBDD.Evenement;
 import com.example.demo.application.classBDD.acteur;
 import com.example.demo.application.classBDD.directeurCasting;
 import com.example.demo.application.classBDD.reponseCasting;
 import com.example.demo.application.service.CastingService;
+import com.example.demo.application.service.EvenementService;
 import com.example.demo.application.service.acteurService;
 import com.example.demo.application.service.agentService;
 import com.example.demo.application.service.reponseCastingService;
@@ -57,6 +59,9 @@ public class applicationController {
 	
 	@Autowired
 	private lienAgentActeurService lienAgentActeurService;
+
+	@Autowired
+	private EvenementService evenementService;
 	
 	@GetMapping("/home")
 	public String home() {
@@ -112,6 +117,7 @@ public class applicationController {
 				session.setAttribute("prenom",verification.getPrenom());
 				session.setAttribute("mail",verification.getMail());
 				session.setAttribute("tel",verification.getTel());
+				session.setAttribute("idDc",verification.getId());
 				return "application/accueilDC";
 			}
 			
@@ -256,24 +262,87 @@ public class applicationController {
 
 		// On met dans le modèle les numéros du mois des jours de la semaine, si jour hors du mois actuel alors -1
 
-		int mondayValue = (day - dayWeek + 1) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 1);
-		int tuesdayValue = (day - dayWeek + 2) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 2);
-		int wednesdayValue = (day - dayWeek + 3) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 3);
-		int thursdayValue = (day - dayWeek + 4) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 4);
-		int fridayValue = (day - dayWeek + 5) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 5);
-		int saturdayValue = (day - dayWeek + 6) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 6);
-		int sundayValue = (day - dayWeek + 7) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 7);
+
+		for (int i = 1; i <= 7; i++) {
+			int dayValue = day - dayWeek + i;
+			int otherMonthValue = month;
+			int otherYearValue = year;
+			int maxDayOtherMonth;
+			String dayName = "";
+			int userType = -1;
+			long userId= -1;
+
+			if (dayValue < 1) {
+				if (month == 1) {
+					otherMonthValue = 12;
+					otherYearValue = year;
+				} else {
+					otherMonthValue = month - 1;
+				}
+				maxDayOtherMonth = (otherYearValue % 400 == 0) || (otherYearValue % 4 == 0 && otherYearValue % 100 != 0) ? Month.of(otherMonthValue).maxLength() : Month.of(otherMonthValue).minLength();
+				dayValue = maxDayOtherMonth + dayValue;
+			} else if (dayValue > maxDayOfMonth) {
+				if (month == 12) {
+					otherMonthValue = 1;
+					otherYearValue = year + 1;
+				} else {
+					otherMonthValue = month + 1;
+				}
+				maxDayOtherMonth = (otherYearValue % 400 == 0) || (otherYearValue % 4 == 0 && otherYearValue % 100 != 0) ? Month.of(otherMonthValue).maxLength() : Month.of(otherMonthValue).minLength();
+				dayValue = maxDayOtherMonth - dayValue;
+			}
+
+			switch (i) {
+				case 1 :
+					dayName = "mondayValue";
+					break;
+				case 2 :
+					dayName = "tuesdayValue";
+					break;
+				case 3 :
+					dayName = "wednesdayValue";
+					break;
+				case 4 :
+					dayName = "thursdayValue";
+					break;
+				case 5 :
+					dayName = "fridayValue";
+					break;
+				case 6 :
+					dayName = "saturdayValue";
+					break;
+				case 7 :
+					dayName = "sundayValue";
+					break;
+			}
+
+			switch ((String)session.getAttribute("role")) {
+				case "agent" :
+					userType = 2;
+					userId = (long) session.getAttribute("idAgent");
+					break;
+				case "acteur" :
+					userType = 1;
+					userId = (long) session.getAttribute("idActeur");
+					break;
+				case "dc" :
+					userType = 0;
+					userId = (long) session.getAttribute("idDc");
+					break;
+			}
+
+			List<Evenement> dayEventsList = evenementService.getEvenementByUserIdAndUserTypeIdAndYearAndMonthAndDay(userId, userType, otherYearValue, otherMonthValue, dayValue);
+
+			for (Evenement tmpEvent : dayEventsList) {
+				model.addAttribute(dayName + String.valueOf(tmpEvent.getHourAtt()), tmpEvent.getLibelle());
+			}
+
+			model.addAttribute(dayName, otherMonthValue != month ? '(' + Integer.toString(dayValue) + ')' : dayValue);
+		}
 
 		model.addAttribute("month", month);
 		model.addAttribute("year", year);
 
-		model.addAttribute("mondayValue", mondayValue);
-		model.addAttribute("tuesdayValue", tuesdayValue);
-		model.addAttribute("wednesdayValue", wednesdayValue);
-		model.addAttribute("thursdayValue", thursdayValue);
-		model.addAttribute("fridayValue", fridayValue);
-		model.addAttribute("saturdayValue", saturdayValue);
-		model.addAttribute("sundayValue", sundayValue);
 		return "/application/emploiDuTemps";
 	}
 
@@ -339,24 +408,85 @@ public class applicationController {
 
 		// On met dans le modèle les numéros du mois des jours de la semaine, si jour hors du mois actuel alors -1
 
-		int mondayValue = (day - dayWeek + 1) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 1);
-		int tuesdayValue = (day - dayWeek + 2) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 2);
-		int wednesdayValue = (day - dayWeek + 3) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 3);
-		int thursdayValue = (day - dayWeek + 4) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 4);
-		int fridayValue = (day - dayWeek + 5) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 5);
-		int saturdayValue = (day - dayWeek + 6) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 6);
-		int sundayValue = (day - dayWeek + 7) < 1 || (day - dayWeek + 1) > maxDayOfMonth ? -1 : (day - dayWeek + 7);
+		for (int i = 1; i <= 7; i++) {
+			int dayValue = day - dayWeek + i;
+			int otherMonthValue = month;
+			int otherYearValue = year;
+			int maxDayOtherMonth;
+			String dayName = "";
+			int userType = -1;
+			long userId= -1;
+
+			if (dayValue < 1) {
+				if (month == 1) {
+					otherMonthValue = 12;
+					otherYearValue = year;
+				} else {
+					otherMonthValue = month - 1;
+				}
+				maxDayOtherMonth = (otherYearValue % 400 == 0) || (otherYearValue % 4 == 0 && otherYearValue % 100 != 0) ? Month.of(otherMonthValue).maxLength() : Month.of(otherMonthValue).minLength();
+				dayValue = maxDayOtherMonth + dayValue;
+			} else if (dayValue > maxDayOfMonth) {
+				if (month == 12) {
+					otherMonthValue = 1;
+					otherYearValue = year + 1;
+				} else {
+					otherMonthValue = month + 1;
+				}
+				maxDayOtherMonth = (otherYearValue % 400 == 0) || (otherYearValue % 4 == 0 && otherYearValue % 100 != 0) ? Month.of(otherMonthValue).maxLength() : Month.of(otherMonthValue).minLength();
+				dayValue = maxDayOtherMonth - dayValue;
+			}
+
+			switch (i) {
+				case 1 :
+					dayName = "mondayValue";
+					break;
+				case 2 :
+					dayName = "tuesdayValue";
+					break;
+				case 3 :
+					dayName = "wednesdayValue";
+					break;
+				case 4 :
+					dayName = "thursdayValue";
+					break;
+				case 5 :
+					dayName = "fridayValue";
+					break;
+				case 6 :
+					dayName = "saturdayValue";
+					break;
+				case 7 :
+					dayName = "sundayValue";
+					break;
+			}
+
+			switch ((String)session.getAttribute("role")) {
+				case "agent" :
+					userType = 2;
+					userId = (long) session.getAttribute("idAgent");
+					break;
+				case "acteur" :
+					userType = 1;
+					userId = (long) session.getAttribute("idActeur");
+					break;
+				case "dc" :
+					userType = 0;
+					userId = (long) session.getAttribute("idDc");
+					break;
+			}
+
+			List<Evenement> dayEventsList = evenementService.getEvenementByUserIdAndUserTypeIdAndYearAndMonthAndDay(userId, userType, otherYearValue, otherMonthValue, dayValue);
+
+			for (Evenement tmpEvent : dayEventsList) {
+				model.addAttribute(dayName + String.valueOf(tmpEvent.getHourAtt()), tmpEvent.getLibelle());
+			}
+
+			model.addAttribute(dayName, otherMonthValue != month ? '(' + Integer.toString(dayValue) + ')' : dayValue);
+		}
 
 		model.addAttribute("month", month);
 		model.addAttribute("year", year);
-
-		model.addAttribute("mondayValue", mondayValue);
-		model.addAttribute("tuesdayValue", tuesdayValue);
-		model.addAttribute("wednesdayValue", wednesdayValue);
-		model.addAttribute("thursdayValue", thursdayValue);
-		model.addAttribute("fridayValue", fridayValue);
-		model.addAttribute("saturdayValue", saturdayValue);
-		model.addAttribute("sundayValue", sundayValue);
 
 		return "/application/emploiDuTemps";
 	}
