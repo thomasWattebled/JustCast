@@ -22,6 +22,7 @@ public class Evenement {
     public Evenement(long userId, int userType, long yearAtt, long monthAtt, long dayAtt, long hourAtt, String libelle, String description) {
         super();
         this.userId = userId;
+        this.userType = userType;
         this.yearAtt = yearAtt;
         this.monthAtt = monthAtt;
         this.dayAtt = dayAtt;
