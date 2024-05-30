@@ -11,7 +11,11 @@ body {
     padding: 0;
     background-color: #f4f4f4;
 }
-
+#entete p:nth-child(2) {
+    margin: 0;
+    text-align: center;
+    flex-grow: 1;
+}
 #entete {
     background-color: #333;
     color: white;
@@ -33,14 +37,13 @@ body {
 }
 
 #barre {
-    background-color: #555;
+    background-color: #555; /* Couleur de fond différente pour la barre */
     color: #fff;
     padding: 10px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-around; /* Pour répartir les boutons horizontalement */
     align-items: center;
 }
-
 .btn {
     cursor: pointer;
 }

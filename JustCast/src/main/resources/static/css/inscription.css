@@ -10,26 +10,38 @@ body {
 
 /* Header Styles */
 
+#entete p:nth-child(2) {
+    margin: 0;
+    text-align: center;
+    flex-grow: 1;
+}
 #entete {
     background-color: #333;
     color: white;
-    padding: 20px;
-    text-align: center;
+    padding: 10px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #entete img {
-    margin-right: 20px;
-    border-radius: 50%;
-    height: 60px;
+    width: 100px;
+    height: auto;
 }
 
 #entete p {
-    font-size: 2em;
     margin: 0;
+    text-align: center;
+    flex-grow: 1; /* Permet à cet élément de remplir l'espace disponible */
+}
+
+#barre {
+    background-color: #555; /* Couleur de fond différente pour la barre */
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around; /* Pour répartir les boutons horizontalement */
+    align-items: center;
 }
 
 /* Form Styles */

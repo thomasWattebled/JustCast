@@ -5,6 +5,11 @@ body {
     background-color: #f4f4f4;
 }
 
+#entete p:nth-child(2) {
+    margin: 0;
+    text-align: center;
+    flex-grow: 1;
+}
 #entete {
     background-color: #333;
     color: white;
@@ -18,12 +23,12 @@ body {
     width: 100px;
     height: auto;
 }
-
-#entete p:nth-child(2) {
+#entete p {
     margin: 0;
     text-align: center;
     flex-grow: 1; /* Permet à cet élément de remplir l'espace disponible */
 }
+
 
 
 
@@ -157,3 +162,18 @@ table td {
             border-radius: 5px;
             margin: 10px 0;
         }
+.form {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
+
+.form p {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    text-align: left;
+}

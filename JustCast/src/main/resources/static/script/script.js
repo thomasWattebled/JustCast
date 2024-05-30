@@ -61,6 +61,11 @@ function voirActeur(){
 	window.location.href = 'voirActeur';
 }
 
+function creerEvenement(){
+	window.location.href = 'creerEvenement';
+}
+
+
 function chargerSemaine(semaine) {
     window.location.href = semaine;
 }

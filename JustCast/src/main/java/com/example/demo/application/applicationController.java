@@ -163,6 +163,8 @@ public class applicationController {
 		session.removeAttribute("age");
 		session.removeAttribute("tel");
 		session.removeAttribute("idActeur");
+		session.removeAttribute("idAgent");
+		session.removeAttribute("idDc");
 		return "/application/home";
 	}
 	
@@ -590,6 +592,51 @@ public class applicationController {
 	public String addLienAgentActeur(@RequestParam Long idActeur,HttpSession session) {
 		lienAgentActeurService.ajouterLien((Long) session.getAttribute("idAgent"), idActeur);
 		return "/application/gererActeur";
+	}
+	
+	@GetMapping("/creerEvenement")
+	public String creerEvenement(HttpSession session) {
+		//lienAgentActeurService.ajouterLien((Long) session.getAttribute("idAgent"), idActeur);
+		return "/application/creerEvenement";
+	}
+	
+	@PostMapping("/creationEvenement")
+	public String creationEvenement(@RequestParam String libelle,@RequestParam String detail,@RequestParam int heure,@RequestParam String date, HttpSession session) {
+		System.out.println(libelle);
+		System.out.println(detail);
+		System.out.println(date);
+		System.out.println(date.substring(0, 4));
+		System.out.println(date.substring(5, 7));
+		System.out.println(date.substring(8));
+		
+		long annee = Long.parseLong(date.substring(0, 4));
+		long mois = Long.parseLong(date.substring(5, 7));
+		long jour = Long.parseLong(date.substring(8));
+		int userType = -1;
+		long userId = -1;
+		switch ((String)session.getAttribute("role")) {
+		case "agent" :
+			userType = 2;
+			userId = (long) session.getAttribute("idAgent");
+			
+			break;
+		case "acteur" :
+			userType = 1;
+			userId = (long) session.getAttribute("idActeur");
+			break;
+		case "dc" :
+			userType = 0;
+			userId = (long) session.getAttribute("idDc");
+			break;
+	}
+		evenementService.ajouterEvenement(userId, userType, annee, mois, jour, heure, libelle, detail);
+		if(userType==(long) 2) {
+			return "/application/accueilAgent";
+		}
+		else if (userType==(long) 1) {
+			return "/application/accueilActeur";
+		}
+		return "/application/accueilDC";
 	}
 	
 	

@@ -37,6 +37,7 @@ public class EvenementServiceImpl implements EvenementService {
 
     @Override
     public void ajouterEvenement(long userId, int userType, long year, long month, long day, long hour, String libelle, String description) {
+    	System.out.println(userType);
         if (!this.evenementExiste(userId, userType, year, month, day, hour)) {
             evenementRepository.save(new Evenement(userId, userType, year, month, day, hour, libelle, description));
         }
